@@ -10,7 +10,7 @@ export const axios = (auth: boolean = true, multi: boolean = false) => {
     }
 
     if (auth) {
-        let Authorization = `Bearer sdsddfdsfdsfds`;
+        let Authorization = `Bearer sdsddfdsfdsfds`; // through storage
         header.Authorization = Authorization;
     }
 
