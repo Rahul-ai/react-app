@@ -1,4 +1,5 @@
 import { Axios, AxiosRequestConfig, AxiosRequestHeaders, RawAxiosRequestHeaders } from "axios"
+import { json } from "stream/consumers";
 import { Api_url } from "./config";
 
 
@@ -30,18 +31,20 @@ export const axios = (auth: boolean = true, multi: boolean = false) => {
 export const Api = {
     upload: async (data: FormData) => {
         try {
-            // console.log(axios(false,true));
-            return await axios(false,true).post("/upload", data);
+            let d = await axios(false,true).post("/upload", data);
+            if(d.statusText === 'OK') return JSON.parse(d.data);
+
+            throw new Error(d.status.toString());
         }
         catch (error) {
-            return error;
+             console.log(error);
         }
     },
 
     logIn: async(params:Map<string,any>)=>{
         try {
-            return await axios(false);
-            // .post("/upload", params);
+            let d = await axios(false);
+            return d;
         }
         catch (error) {
             return error;
