@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Api } from "../../Helpers/axios";
+import { Api } from "../../Helpers/axios/axios";
 import './FileUpload.css';
 
 export const FileUpload = (props: any) => {
