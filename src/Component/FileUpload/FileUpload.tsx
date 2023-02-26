@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Api } from "../../Helpers/axios";
+import './FileUpload.css';
 
 export const FileUpload = (props: any) => {
 
@@ -21,8 +22,8 @@ export const FileUpload = (props: any) => {
         }
     };
 
-    return <div>
+    return <div className="file_container">
         <input type="file" onChange={Upload} />
-        {Image && <img src={Image}></img>}
+        {Image && <img className="uploaded_image" src={Image}></img>}
     </div>
 }

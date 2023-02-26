@@ -8,5 +8,6 @@
 }
 
 .uploaded_image {
+    padding-top: 2px;
     width: 200px;
 }
