@@ -9,8 +9,8 @@ export const LogIn = () => {
     const [data,setData] = useState<any>();
 
     const config: formInterface[] = [
-        { type: "text", key: "user", name: "User Name", require: true },
-        { type: "password", name: "User Name", require: true, key: "password" },
+        { type: "text", name: "User Name", key: "user", require: true },
+        { type: "password", name: "Password", require: true, key: "password" },
     ];
 
 
