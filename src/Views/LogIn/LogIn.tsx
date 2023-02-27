@@ -1,22 +1,24 @@
+import { Form } from "react-bootstrap";
 import { GenericForm } from "../../Component/GenericForm/GenericForm";
-import { Form } from "../../Helpers/Form/form";
+import { formInterface } from "../../Helpers/Form/formInterface";
 
 export const LogIn = () => {
 
-    const config = [
-        { type: "text", require:true},
-        { type: "password", require:true },
+    const config:formInterface[] = [
+        { type: "text", key:"user", name:"User Name", require:true },
+        { type: "password", name:"User Name", require:true, key:"password" },
     ];
 
 
-    const Submit = () => {
-        
+    const Submit = (e:any) => {
+        e.preventDefault();
+        console.log(typeof e)
     }
 
     return <div className="login_container">
-        <form onSubmit={Submit}>
+        <Form onSubmit={Submit}>
             { GenericForm(config) }
             <button type="submit">LogIn</button>
-        </form>
+        </Form>
     </div>
 }
