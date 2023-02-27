@@ -6,7 +6,6 @@ import { LogIn } from './Views/LogIn/LogIn';
 function App() {
   return (
     <div className="App">
-      {/* <FileUpload /> */}
       <LogIn />
     </div>
   );

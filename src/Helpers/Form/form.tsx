@@ -1,18 +1,21 @@
+import React from "react";
 import { FileUpload } from "../../Component/FileUpload/FileUpload";
 import { formInterface } from "./firmInterface";
 
-export const Form = (field:formInterface) =>{
-switch(field.type){
-    case "password":
-    return <><input type="password" required /></>
+export class Form extends React.Component<{field: formInterface}> {
+    render(){
+    switch (this.props.field.type) {
+        case "password":
+            return <><input type="password" /></>
 
-    case "text":
-    return <><input type="text" required /></>
+        case "text":
+            return <><input type="text" /></>
 
-    case "fileUpload":
-    return <><FileUpload /></>
+        case "fileUpload":
+            return <><FileUpload /></>
 
-    default:
-    return <><input type="password" required /></>   
+        default:
+            return <><input type="password" /></>
+    }
 }
 };
