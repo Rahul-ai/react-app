@@ -42,7 +42,9 @@ export const Api = {
     logIn: async (params: Map<string, any>) => {
         try {
             let d = await axios(false).post("/login",params);
-            return d;
+            if (d.statusText === 'OK') return result(d.data);
+
+            throw errors(d.status);
         }
         catch (error) {
             return error;

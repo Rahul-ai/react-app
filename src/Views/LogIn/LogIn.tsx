@@ -1,24 +1,37 @@
-import { Form } from "react-bootstrap";
+import { useState } from "react";
+import { Form, Button } from "react-bootstrap";
 import { GenericForm } from "../../Component/GenericForm/GenericForm";
+import { Api } from "../../Helpers/axios/axios";
 import { formInterface } from "../../Helpers/Form/formInterface";
 
 export const LogIn = () => {
 
-    const config:formInterface[] = [
-        { type: "text", key:"user", name:"User Name", require:true },
-        { type: "password", name:"User Name", require:true, key:"password" },
+    const [data,setData] = useState<any>();
+
+    const config: formInterface[] = [
+        { type: "text", key: "user", name: "User Name", require: true },
+        { type: "password", name: "User Name", require: true, key: "password" },
     ];
 
 
-    const Submit = (e:any) => {
+    const Submit =async(e:React.FormEvent<HTMLInputElement>|any) => {
         e.preventDefault();
-        console.log(typeof e)
-    }
+        let a = await Api.logIn(data);
+        console.log(a)
+    };
+
+    const onChange=(key:string,value:any)=>{
+        let d = {...data};
+        d[key] = value;
+        setData(d);
+    };
 
     return <div className="login_container">
         <Form onSubmit={Submit}>
-            { GenericForm(config) }
-            <button type="submit">LogIn</button>
+            {GenericForm(config,onChange)}
+            <Button type="submit">
+                Submit
+            </Button>
         </Form>
     </div>
 }

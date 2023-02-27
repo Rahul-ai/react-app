@@ -3,7 +3,13 @@ import { Col, FormControl, FormGroup } from "react-bootstrap";
 import { FileUpload } from "../../Component/FileUpload/FileUpload";
 import { formInterface } from "./formInterface";
 
-export class Form extends React.Component<{field: formInterface}> {
+interface FormClass {
+    field: formInterface,
+    onChange:React.ChangeEvent<HTMLFormElement>|any,
+};
+
+export class Form extends React.Component<FormClass>{
+    
     renderLabel = (field:formInterface) => {
         return <>{field.name}
         {field.require ? <span style={{color:'rgb(240, 68, 56)'}}>*</span> : ''}
@@ -15,7 +21,8 @@ export class Form extends React.Component<{field: formInterface}> {
         case "password":
             return <Col md={4}><FormGroup controlId={this.props.field.key}>
             {/* {renderLabel(field)} */}
-            <FormControl type="password" />
+            <FormControl type="password"
+             onChange={(e:any)=>{this.props.onChange(this.props.field.key,e.target.value)}} />
             </FormGroup>  
         {/* {renderError(errors[field.key])} */}
         </Col>
@@ -23,7 +30,8 @@ export class Form extends React.Component<{field: formInterface}> {
         case "text":
            return <Col md={4}><FormGroup controlId={this.props.field.key}>
             {/* {renderLabel(field)} */}
-            <FormControl type="text" />
+            <FormControl type="text"  
+            onChange={(e:any)=>{this.props.onChange(this.props.field.key,e.target.value)}} />
             </FormGroup>  
         {/* {renderError(errors[field.key])} */}
         </Col>
@@ -32,7 +40,8 @@ export class Form extends React.Component<{field: formInterface}> {
             return <><FileUpload /></>
 
         default:
-            return <Col md={4}><FormGroup controlId={this.props.field.key}>
+            return <Col md={4}><FormGroup controlId={this.props.field.key} 
+            onChange={(e:any)=>{this.props.onChange(this.props.field.key,e.target.value)}}>
             {/* {renderLabel(field)} */}
             <FormControl type="text" />
             </FormGroup>  
