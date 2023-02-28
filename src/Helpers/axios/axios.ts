@@ -32,7 +32,6 @@ export const Api = {
         try {
             let d = await axios(false, true).patchForm("/upload", data);
             if (d.statusText === 'OK') return result(d.data);
-
             throw errors(d.status);
         }
         catch (error) {
@@ -44,7 +43,6 @@ export const Api = {
         try {
             let d = await axios(false).post("/login",request(body));
             if (d.statusText === 'OK') return result(d.data);
-
             throw errors(d.status);
         }
         catch (error) {

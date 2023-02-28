@@ -1,4 +1,5 @@
 import React from "react";
+import { FormLabel } from "react-bootstrap";
 import { Col, FormControl, FormGroup } from "react-bootstrap";
 import { FileUpload } from "../../Component/FileUpload/FileUpload";
 import { formInterface } from "./formInterface";
@@ -11,9 +12,9 @@ interface FormClass {
 export class Form extends React.Component<FormClass>{
 
     renderLabel = (field: formInterface) => {
-        return <>{field.name}
+        return <FormLabel>{field.name}
             {field.require ? <span style={{ color: 'rgb(240, 68, 56)' }}>*</span> : ''}
-        </>
+        </FormLabel>
     };
 
     render() {

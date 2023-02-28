@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Col, FormGroup } from "react-bootstrap";
+import { Col } from "react-bootstrap";
 import { Api } from "../../Helpers/axios/axios";
 import './FileUpload.css';
 
