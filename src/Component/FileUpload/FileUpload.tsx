@@ -14,11 +14,9 @@ export const FileUpload = (props: any) => {
             formData.append("file", event?.target?.files[0])
             Api.upload(formData).then((data)=>{
                 setImage(data.path);    
-                console.log(data);
             }).catch((error)=>{
                 console.log(error)
-            })
-            
+            });
         }
         else {
             console.log("error");
