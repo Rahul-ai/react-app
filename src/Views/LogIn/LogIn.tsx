@@ -7,13 +7,13 @@ import { user } from "../../Redux/Action/Action";
 import { store } from "../../Redux/store/Store";
 
 export const LogIn = () => {
-
-    const [data, setData] = useState<any>();
-
+    //Form Data 
     const config: formInterface[] = [
         { type: "text", name: "User Name", key: "user", require: true },
         { type: "password", name: "Password", require: true, key: "password" },
     ];
+
+    const [data, setData] = useState<any>();
 
     useEffect(()=>{
         window.localStorage.clear();
