@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Form, Button, Row, Container } from "react-bootstrap";
 import { GenericForm } from "../../Component/GenericForm/GenericForm";
 import { Api } from "../../Helpers/axios/axios";
@@ -15,6 +15,9 @@ export const LogIn = () => {
         { type: "password", name: "Password", require: true, key: "password" },
     ];
 
+    useEffect(()=>{
+        window.localStorage.clear();
+    },[])
 
     const Submit = async (e: React.FormEvent<HTMLInputElement> | any) => {
         e.preventDefault();
