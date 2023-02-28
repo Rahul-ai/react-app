@@ -3,7 +3,7 @@ import { Form, Button, Row, Container } from "react-bootstrap";
 import { GenericForm } from "../../Component/GenericForm/GenericForm";
 import { Api } from "../../Helpers/axios/axios";
 import { formInterface } from "../../Helpers/Form/formInterface";
-import { user } from "../../Redux/Action/Action";
+import { UserDetails } from "../../Redux/Action/Action";
 import { store } from "../../Redux/store/Store";
 
 export const LogIn = () => {
@@ -22,7 +22,7 @@ export const LogIn = () => {
     const Submit = async (e: React.FormEvent<HTMLInputElement> | any) => {
         e.preventDefault();
         let user = await Api.logIn(data);
-        store.dispatch(user(user));
+        store.dispatch(UserDetails(user));
     };
 
     const onChange = (key: string, value: any) => {
