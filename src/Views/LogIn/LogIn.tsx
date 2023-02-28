@@ -30,7 +30,7 @@ export const LogIn = () => {
         <Form onSubmit={Submit}>
             <Row>
                 {GenericForm(config, onChange)}
-                <Button type="submit">
+                <Button className="mt-2" type="submit">
                     Submit
                 </Button>
             </Row>

@@ -17,7 +17,7 @@ export const axios = (auth: boolean = true, multi: boolean = false) => {
     if (multi) {
         header["Content-Type"] = 'multipart/form-data';
     }
-    console.log(header)
+
     const axiosConfig: AxiosRequestConfig = {
         baseURL: Api_url,
         headers: header
