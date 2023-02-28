@@ -1,4 +1,4 @@
-export const buyCake = (token:{})=>{
+export const user = (token:{})=>{
     return{
         type:"login",
         data:token,

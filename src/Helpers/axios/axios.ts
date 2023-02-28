@@ -1,4 +1,5 @@
 import { Axios, AxiosRequestConfig, RawAxiosRequestHeaders } from "axios"
+import { store } from "../../Redux/store/Store";
 import { Api_url } from "../config/config";
 
 export const axios = (auth: boolean = true, multi: boolean = false) => {
@@ -9,8 +10,9 @@ export const axios = (auth: boolean = true, multi: boolean = false) => {
         Accept: Accept,
     }
 
-    if (auth) {
-        let Authorization = `Bearer sdsddfdsfdsfds`; // through storage
+    let Token = store.getState()?.Token;
+    if (auth && Token) {
+        let Authorization = `Bearer ${Token}`; // through storage
         header.Authorization = Authorization;
     }
 
