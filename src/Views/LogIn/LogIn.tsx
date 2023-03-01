@@ -9,8 +9,9 @@ import { store } from "../../Redux/store/Store";
 import { useNavigate } from "react-router-dom";
 
 const LogIn = ({user}:any) => {
-    //Form Data 
     const navigate = useNavigate();
+    
+    //Form Data 
     const config: formInterface[] = [
         { type: "text", name: "User Name", key: "user", require: true },
         { type: "password", name: "Password", require: true, key: "password" },
