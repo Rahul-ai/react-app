@@ -1,11 +1,17 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { SignIn } from './Views/LogIn/LogIn';
-// import { Header } from './Component/Header/Header';
 
 function App() {
   return (
-      <SignIn />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<SignIn />}>
+        </Route>
+        <Route path="*" element={<h1>No Page Found</h1>} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
