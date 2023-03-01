@@ -28,6 +28,27 @@ export class Form extends React.Component<FormClass>{
                     </FormGroup>
                     {/* {renderError(errors[field.key])} */}
                 </Col>
+            
+            case "email":
+                return <Col md={4}>
+                    <FormGroup controlId={this.props.field.key}>
+                        {this.renderLabel(this.props.field)}
+                        <FormControl type="email"
+                            onChange={(e: any) => { this.props.onChange(this.props.field.key, e.target.value) }} />
+                    </FormGroup>
+                    {/* {renderError(errors[field.key])} */}
+                </Col>
+
+
+            case "textarea":
+                return <Col md={4}>
+                    <FormGroup controlId={this.props.field.key}>
+                        {this.renderLabel(this.props.field)}
+                        <FormControl type="textarea"
+                            onChange={(e: any) => { this.props.onChange(this.props.field.key, e.target.value) }} />
+                    </FormGroup>
+                    {/* {renderError(errors[field.key])} */}
+                </Col>
 
             case "text":
                 return <Col md={4}>
