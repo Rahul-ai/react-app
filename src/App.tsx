@@ -1,13 +1,11 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { FileUpload } from './Component/FileUpload/FileUpload';
-import { LogIn } from './Views/LogIn/LogIn';
-import { Container, Row } from 'react-bootstrap';
+import { SignIn } from './Views/LogIn/LogIn';
 // import { Header } from './Component/Header/Header';
 
 function App() {
   return (
-      <LogIn />
+      <SignIn />
   );
 }
 

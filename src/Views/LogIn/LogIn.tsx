@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { Form, Button, Row, Container } from "react-bootstrap";
+import { AuthDetails } from "../../Component/authDetails/AuthDetails";
 import { GenericForm } from "../../Component/GenericForm/GenericForm";
 import { Api } from "../../Helpers/axios/axios";
 import { formInterface } from "../../Helpers/Form/formInterface";
 import { UserDetails } from "../../Redux/Action/Action";
 import { store } from "../../Redux/store/Store";
 
-export const LogIn = () => {
+const LogIn = (props:any) => {
     //Form Data 
     const config: formInterface[] = [
         { type: "text", name: "User Name", key: "user", require: true },
@@ -41,4 +42,6 @@ export const LogIn = () => {
             </Row>
         </Form>
     </Container>
-}
+};
+
+export const SignIn = AuthDetails(LogIn);
