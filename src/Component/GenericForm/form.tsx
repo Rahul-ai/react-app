@@ -1,7 +1,7 @@
 import React from "react";
 import { FormLabel, FormSelect } from "react-bootstrap";
 import { Col, FormControl, FormGroup } from "react-bootstrap";
-import { FileUpload } from "../../Component/FileUpload/FileUpload";
+import { FileUpload } from "../FileUpload/FileUpload";
 import { formInterface } from "./formInterface";
 
 interface FormClass {
@@ -18,35 +18,36 @@ export class Form extends React.Component<FormClass>{
     };
 
     render() {
+        let params = this.props;
         switch (this.props.field.type) {
             case "password":
                 return <Col md={4}>
-                    <FormGroup controlId={this.props.field.key}>
-                        {this.renderLabel(this.props.field)}
+                    <FormGroup controlId={params.field.key}>
+                        {this.renderLabel(params.field)}
                         <FormControl type="password"
-                            onChange={(e: any) => { this.props.onChange(this.props.field.key, e.target.value) }} />
+                            onChange={(e: any) => { params.onChange(params.field.key, e.target.value) }} />
                     </FormGroup>
                     {/* {renderError(errors[field.key])} */}
                 </Col>
 
             case "number":
                 return <Col md={4}>
-                    <FormGroup controlId={this.props.field.key}>
-                        {this.renderLabel(this.props.field)}
+                    <FormGroup controlId={params.field.key}>
+                        {this.renderLabel(params.field)}
                         <FormControl type="number"
-                            onChange={(e: any) => { this.props.onChange(this.props.field.key, e.target.value) }} />
+                            onChange={(e: any) => {params.onChange(params.field.key, e.target.value) }} />
                     </FormGroup>
                     {/* {renderError(errors[field.key])} */}
                 </Col>   
                 
                 case "select":
                     return <Col md={4}>
-                        <FormGroup controlId={this.props.field.key}>
-                            {this.renderLabel(this.props.field)}
+                        <FormGroup controlId={params.field.key}>
+                            {this.renderLabel(params.field)}
                             <FormSelect
-                                onChange={(e: any) => { this.props.onChange(this.props.field.key, e.target.value) }} >
+                                onChange={(e: any) => { params.onChange(params.field.key, e.target.value) }} >
                                     <option>Please Select</option>
-                                    {this.props.field.options?.map((option)=>{
+                                    {params.field.options?.map((option)=>{
                                        return <option value={option}>{option}</option>
                                     })}
                             </FormSelect>
@@ -56,10 +57,10 @@ export class Form extends React.Component<FormClass>{
             
             case "email":
                 return <Col md={4}>
-                    <FormGroup controlId={this.props.field.key}>
-                        {this.renderLabel(this.props.field)}
+                    <FormGroup controlId={params.field.key}>
+                        {this.renderLabel(params.field)}
                         <FormControl type="email"
-                            onChange={(e: any) => { this.props.onChange(this.props.field.key, e.target.value) }} />
+                            onChange={(e: any) => { params.onChange(params.field.key, e.target.value) }} />
                     </FormGroup>
                     {/* {renderError(errors[field.key])} */}
                 </Col>
@@ -67,20 +68,20 @@ export class Form extends React.Component<FormClass>{
 
             case "textarea":
                 return <Col md={4}>
-                    <FormGroup controlId={this.props.field.key}>
-                        {this.renderLabel(this.props.field)}
+                    <FormGroup controlId={params.field.key}>
+                        {this.renderLabel(params.field)}
                         <FormControl type="textarea"
-                            onChange={(e: any) => { this.props.onChange(this.props.field.key, e.target.value) }} />
+                            onChange={(e: any) => { params.onChange(params.field.key, e.target.value) }} />
                     </FormGroup>
                     {/* {renderError(errors[field.key])} */}
                 </Col>
 
             case "text":
                 return <Col md={4}>
-                    <FormGroup controlId={this.props.field.key}>
-                        {this.renderLabel(this.props.field)}
+                    <FormGroup controlId={params.field.key}>
+                        {this.renderLabel(params.field)}
                         <FormControl type="text"
-                            onChange={(e: any) => { this.props.onChange(this.props.field.key, e.target.value) }} />
+                            onChange={(e: any) => { params.onChange(params.field.key, e.target.value) }} />
                     </FormGroup>
                     {/* {renderError(errors[field.key])} */}
                 </Col>
@@ -90,10 +91,10 @@ export class Form extends React.Component<FormClass>{
 
             default:
                 return <Col md={4}>
-                    <FormGroup controlId={this.props.field.key}>
-                        {this.renderLabel(this.props.field)}
+                    <FormGroup controlId={params.field.key}>
+                        {this.renderLabel(params.field)}
                         <FormControl type="text"
-                            onChange={(e: any) => { this.props.onChange(this.props.field.key, e.target.value) }} />
+                            onChange={(e: any) => { params.onChange(params.field.key, e.target.value) }} />
                     </FormGroup>
                     {/* {renderError(errors[field.key])} */}
                 </Col>

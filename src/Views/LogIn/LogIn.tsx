@@ -3,7 +3,7 @@ import { Form, Button, Row, Container } from "react-bootstrap";
 import { RenderComponent } from "../../Component/RenderComponent/RenderComponent";
 import { GenericForm } from "../../Component/GenericForm/GenericForm";
 import { Api } from "../../Helpers/axios/axios";
-import { formInterface } from "../../Helpers/Form/formInterface";
+import { formInterface } from "../../Component/GenericForm/formInterface";
 import { UserDetails } from "../../Redux/Action/Action";
 import { store } from "../../Redux/store/Store";
 import { useNavigate } from "react-router-dom";
