@@ -1,5 +1,5 @@
 import React from "react";
-import { FormLabel } from "react-bootstrap";
+import { FormLabel, FormSelect } from "react-bootstrap";
 import { Col, FormControl, FormGroup } from "react-bootstrap";
 import { FileUpload } from "../../Component/FileUpload/FileUpload";
 import { formInterface } from "./formInterface";
@@ -28,6 +28,31 @@ export class Form extends React.Component<FormClass>{
                     </FormGroup>
                     {/* {renderError(errors[field.key])} */}
                 </Col>
+
+            case "number":
+                return <Col md={4}>
+                    <FormGroup controlId={this.props.field.key}>
+                        {this.renderLabel(this.props.field)}
+                        <FormControl type="number"
+                            onChange={(e: any) => { this.props.onChange(this.props.field.key, e.target.value) }} />
+                    </FormGroup>
+                    {/* {renderError(errors[field.key])} */}
+                </Col>   
+                
+                case "select":
+                    return <Col md={4}>
+                        <FormGroup controlId={this.props.field.key}>
+                            {this.renderLabel(this.props.field)}
+                            <FormSelect
+                                onChange={(e: any) => { this.props.onChange(this.props.field.key, e.target.value) }} >
+                                    <option>Please Select</option>
+                                    {this.props.field.options?.map((option)=>{
+                                       return <option value={option}>{option}</option>
+                                    })}
+                            </FormSelect>
+                        </FormGroup>
+                        {/* {renderError(errors[field.key])} */}
+                    </Col>              
             
             case "email":
                 return <Col md={4}>

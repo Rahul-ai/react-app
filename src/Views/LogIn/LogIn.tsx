@@ -14,6 +14,7 @@ const LogIn = ({user}:any) => {
     //Form Data 
     const config: formInterface[] = [
         { type: "text", name: "User Name", key: "user", require: true },
+        // { type: "select", name: "User Name", key: "user", options:["sda","adsad"] , require: true },
         { type: "password", name: "Password", require: true, key: "password" },
     ];
 
@@ -32,6 +33,7 @@ const LogIn = ({user}:any) => {
     };
 
     const onChange = (key: string, value: any) => {
+        console.log({key,value})
         let d = { ...data };
         d[key] = value;
         setData(d);
