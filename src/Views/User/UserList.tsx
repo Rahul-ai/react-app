@@ -40,6 +40,6 @@ export const UserList = () =>{
       ]
 
       return<>
-      <RTable tableStructure={format} data={data}/>
+      <RTable  data={data}/>
       </>
 };
