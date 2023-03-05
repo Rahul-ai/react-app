@@ -6,7 +6,7 @@ export const TablePagination = (props: any) => {
         <Pagination>
             <Pagination.Prev />
             {[...Array(props.totalPages)].map((d, index) => {
-                return <Pagination.Item>{index + 1}</Pagination.Item>
+                return <Pagination.Item key={index + 1} >{index + 1}</Pagination.Item>
             })}
             <Pagination.Next />
         </Pagination></div>
