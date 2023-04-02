@@ -5,16 +5,13 @@ import { TablePagination } from "../Pagination/TablePagination";
 import { rTableInterface } from "./rTableInterface";
 
 export class RTable extends React.Component<any> {
-  constructor(props: rTableInterface) {
-    super(props);
-    this.state = {
+    state = {
       error: null,
       isLoaded: false,
       limit:10,
       page:1,
       items: [],
     };
-  }
 
   fetch = async () => {
     // if(this.props.api)
@@ -81,7 +78,7 @@ export class RTable extends React.Component<any> {
 
   render() {
     let params = this.props;
-    let data:[] = this.props.data;
+    let data: [] = this.props.data || this.state.items;
     return (
       <TabContainer>
         <Table striped bordered hover>
