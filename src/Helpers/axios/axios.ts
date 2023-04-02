@@ -50,6 +50,51 @@ export const Api = {
         catch (error) {
             return error;
         }
+    },
+
+    post: async (url:any,data: any) => {
+        try {
+            console.log(request(data));
+            let d = await axios(false).post(url, request(data));
+            if (d.statusText === 'OK') return result(d.data);
+            throw errors(d.status);
+        }
+        catch (error) {
+            console.log(error);
+        }
+    },
+
+    get: async (axios: any) => {
+        try {
+            let d = await axios(false).get(axios);
+            if (d.statusText === 'OK') return result(d.data);
+            throw errors(d.status);
+        }
+        catch (error) {
+            return error;
+        }
+    },
+
+    put: async (data: Map<string,any>) => {
+        try {
+            let d = await axios(false, true).put("/upload", data);
+            if (d.statusText === 'OK') return result(d.data);
+            throw errors(d.status);
+        }
+        catch (error) {
+            console.log(error);
+        }
+    },
+
+    delete: async (id: any) => {
+        try {
+            let d = await axios(false).delete("/login",id);
+            if (d.statusText === 'OK') return result(d.data);
+            throw errors(d.status);
+        }
+        catch (error) {
+            return error;
+        }
     }
 }
 

@@ -1,65 +1,105 @@
 import React from "react";
 import { Pagination, TabContainer, Table } from "react-bootstrap";
+import { Api } from "../../Helpers/axios/axios";
 import { TablePagination } from "../Pagination/TablePagination";
+import { rTableInterface } from "./rTableInterface";
 
-export class RTable extends React.Component<any>{
+export class RTable extends React.Component<any> {
+  constructor(props: rTableInterface) {
+    super(props);
+    this.state = {
+      error: null,
+      isLoaded: false,
+      limit:10,
+      page:1,
+      items: [],
+    };
+  }
+
+  fetch = async () => {
+    // if(this.props.api)
+    // {
+      console.log(await Api.post("user/withPagination",this.state));
+    // }
+  };
+
+  componentDidMount(): void {
+       this.fetch();
+      // .then((result: any) => {
+      //   console.log(result);
+      //   this.setState({
+      //     isLoaded: true,
+      //     items: result,
+      //   });
+      // })
+      // .catch((err) => {
+      //   console.log(err);
+      // })
+      // .finally(() => {
+      //   this.setState({
+      //     isLoaded: false,
+      //   });
+      // });
+  }
 
   renderHeading = (struct: any) => {
     return struct.map((head: any) => {
-      return <th>{head.name}</th>
+      return <th>{head.name}</th>;
     });
-  }
+  };
 
   renderBody = (data: any) => {
     return data.map((d: any) => {
-      return <tr>
-        {this.renderData(d)}
-      </tr>
-    })
-  }
+      return <tr>{this.renderData(d)}</tr>;
+    });
+  };
 
-  renderData = (data: any) => (
+  renderData = (data: any) =>
     this.props.tableStructure.map((format: any) => {
       if (format.render) {
-        return <td>{format.render(data)}</td>
+        return <td>{format.render(data)}</td>;
       }
-      return <td>{data[format.key]}</td>
-    })
-  )
+      return <td>{data[format.key]}</td>;
+    });
 
   NrenderHeading = (data: any) => {
     return Object.keys(data[0]).map((key: any) => {
-      return <th>{key}</th>
+      return <th>{key}</th>;
     });
-  }
+  };
 
   NrenderBody = (data: any) => {
     return data.map((d: any) => {
-      return <tr>
-        {this.NrenderData(d)}
-      </tr>
-    })
-  }
+      return <tr>{this.NrenderData(d)}</tr>;
+    });
+  };
 
-  NrenderData = (data: any) => (
+  NrenderData = (data: any) =>
     Object.keys(data).map((key: any) => {
-      return <td>{data[key]}</td>
-    })
-  )
+      return <td>{data[key]}</td>;
+    });
 
   render() {
     let params = this.props;
-    return <TabContainer>
-      <Table striped bordered hover>
-        <thead><tr>
-          {params?.tableStructure ? this.renderHeading(params.tableStructure) : this.NrenderHeading(params.data)}
-        </tr>
-        </thead>
-        <tbody>
-          {params?.tableStructure ? this.renderBody(params.data) : this.NrenderBody(params.data)}
-        </tbody>
-      </Table>
-      <TablePagination totalPages={5} />
-    </TabContainer>
+    let data:[] = this.props.data;
+    return (
+      <TabContainer>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              {params?.tableStructure
+                ? this.renderHeading(params.tableStructure)
+                : this.NrenderHeading(data)}
+            </tr>
+          </thead>
+          <tbody>
+            {params?.tableStructure
+              ? this.renderBody(data)
+              : this.NrenderBody(data)}
+          </tbody>
+        </Table>
+        <TablePagination totalPages={5} />
+      </TabContainer>
+    );
   }
 }
