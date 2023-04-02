@@ -54,7 +54,6 @@ export const Api = {
 
     post: async (url:any,data: any) => {
         try {
-            console.log(request(data));
             let d = await axios(false).post(url, request(data));
             if (d.statusText === 'OK') return result(d.data);
             throw errors(d.status);

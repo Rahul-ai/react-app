@@ -34,12 +34,12 @@ export const UserList = () =>{
         }
       ];
 
-      const format:rTableInterface[] = [
+      const format = [
         { name:"COLOR", key:'color' },
         { name:"VALUE", key:"value" },
       ]
 
       return<>
-      <RTable  data={data}/>
+      <RTable api="user/withPagination"/>
       </>
 };
