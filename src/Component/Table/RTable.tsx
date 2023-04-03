@@ -66,8 +66,8 @@ export class RTable extends React.Component<rTableInterface> {
   };
 
   renderBody = (data: any) => {
-    return data.map((d: any,index:BigInteger) => {
-      return <tr>{this.renderData(d,index)}</tr>;
+    return data.map((d: any,index:any) => {
+      return <tr>{this.renderData(d,index+1)}</tr>;
     });
   };
 
