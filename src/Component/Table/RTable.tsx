@@ -1,53 +1,50 @@
 import React from "react";
-import { TabContainer, Table } from "react-bootstrap";
+import { FormSelect, TabContainer, Table } from "react-bootstrap";
 import { Api } from "../../Helpers/axios/axios";
 import { TablePagination } from "../Pagination/TablePagination";
 import { rTableInterface } from "./rTableInterface";
 
-export class RTable  extends React.Component<rTableInterface> {
-    state = {
-      error: null,
-      isLoaded: false,
-      items: [],
-    };
-    
-    private page = 1;
-    private limit = 10; 
+export class RTable extends React.Component<rTableInterface> {
+  state = {
+    error: null,
+    isLoaded: false,
+    items: [],
+  };
 
-  fetch = async ( Update = false ) => {
-    
-    if(Update){
-      Api.post(this.props.api,{page:this.page,limit:this.limit})
-      .then((result: any) => {
-        this.setState({
-          isLoaded: false,
-          items: result || [],
+  private page = 1;
+  private limit = 10;
+
+  fetch = async (Update = false) => {
+    if (Update) {
+      Api.post(this.props.api, { page: this.page, limit: this.limit })
+        .then((result: any) => {
+          this.setState({
+            isLoaded: false,
+            items: result || [],
+          });
+        })
+        .catch((err) => {
+          console.log(err);
         });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
     }
 
-    if(this.props.api)
-    {
-      return Api.post(this.props.api,{page:this.page,limit:this.limit});
+    if (this.props.api) {
+      return Api.post(this.props.api, { page: this.page, limit: this.limit });
     }
   };
 
   componentDidMount(): void {
-    if(this.props.api)
-    {
-       this.fetch()
-      .then((result: any) => {
-        this.setState({
-          isLoaded: false,
-          items: result || [],
+    if (this.props.api) {
+      this.fetch()
+        .then((result: any) => {
+          this.setState({
+            isLoaded: false,
+            items: result || [],
+          });
+        })
+        .catch((err) => {
+          console.log(err);
         });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
     }
   }
 
@@ -57,8 +54,14 @@ export class RTable  extends React.Component<rTableInterface> {
     });
   };
 
-  onClick = (event : any) =>{
+  onClick = (event: any) => {
     this.page = parseInt(event.target.text);
+    this.fetch(true);
+  };
+
+  onSelectClick = (event: any) => {
+    this.limit = event.target.value;
+    this.page = 1;
     this.fetch(true);
   };
 
@@ -93,31 +96,35 @@ export class RTable  extends React.Component<rTableInterface> {
       return <td>{data[key]}</td>;
     });
 
-  
-  render() {  
-    if( this.state.items.length !== 0){ 
-    let page = Math.ceil(this.state.items[1]/this.limit); 
-    let params = this.props;
-    let data: [] = this.props.data || this.state.items[0];
-    return (
-      <TabContainer key={"TabContainer"}>
-        <Table key={"Table"} striped bordered hover>
-          <thead>
-            <tr>
+  render() {
+    if (this.state.items.length !== 0) {
+      let page = Math.ceil(this.state.items[1] / this.limit);
+      let params = this.props;
+      let data: [] = this.props.data || this.state.items[0];
+      return (
+        <TabContainer key={"TabContainer"}>
+          <Table key={"Table"} striped bordered hover>
+            <thead>
+              <tr>
+                {params?.tableStructure
+                  ? this.renderHeading(params.tableStructure)
+                  : this.NrenderHeading(data)}
+              </tr>
+            </thead>
+            <tbody>
               {params?.tableStructure
-                ? this.renderHeading(params.tableStructure)
-                : this.NrenderHeading(data)}
-            </tr>
-          </thead>
-          <tbody>
-            {params?.tableStructure
-              ? this.renderBody(data)
-              : this.NrenderBody(data)}
-          </tbody>
-        </Table>
-        <TablePagination key={"TablePagination"} onClick={this.onClick} totalPages={page} />
-      </TabContainer>
-    );
+                ? this.renderBody(data)
+                : this.NrenderBody(data)}
+            </tbody>
+          </Table>
+          <TablePagination
+            key={"TablePagination"}
+            onSelectClick = {this.onSelectClick}
+            onClick={this.onClick}
+            totalPages={page}
+          />
+        </TabContainer>
+      );
+    }
   }
-}
 }
