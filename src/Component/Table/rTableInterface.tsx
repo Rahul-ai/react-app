@@ -1,8 +1,8 @@
-import { ListFormat, Map } from "typescript"
+import { TableStructure } from "./TableStructureInterface"
 
 export interface rTableInterface{
     render?:Function
     api?:string
-    tableStructure?:[]
+    tableStructure?:TableStructure[]
     data?:[]
 } 

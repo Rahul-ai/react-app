@@ -28,7 +28,7 @@ export class RTable extends React.Component<rTableInterface> {
         });
     }
 
-    if (this.props.api) {
+    if (this.props.api && !Update ) {
       return Api.post(this.props.api, { page: this.page, limit: this.limit });
     }
   };
@@ -66,15 +66,15 @@ export class RTable extends React.Component<rTableInterface> {
   };
 
   renderBody = (data: any) => {
-    return data.map((d: any) => {
-      return <tr>{this.renderData(d)}</tr>;
+    return data.map((d: any,index:BigInteger) => {
+      return <tr>{this.renderData(d,index)}</tr>;
     });
   };
 
-  renderData = (data: any) =>
+  renderData = (data: any,index:BigInteger) =>
     this.props.tableStructure?.map((format: any) => {
       if (format.render) {
-        return <td>{format.render(data)}</td>;
+        return <td>{format.render(data,index)}</td>;
       }
       return <td>{data[format.key]}</td>;
     });

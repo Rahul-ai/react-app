@@ -22,7 +22,6 @@ const LogIn = ({user}:any) => {
 
     useEffect(()=>{
         window.localStorage.clear();
-        
     },[])
 
     const Submit = async (e: React.FormEvent<HTMLInputElement> | any) => {
