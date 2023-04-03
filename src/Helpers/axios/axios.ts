@@ -63,20 +63,23 @@ export const Api = {
         }
     },
 
-    get: async (axios: any) => {
+   
+
+    put: async (url:string, data: Map<string,any>) => {
         try {
-            let d = await axios(false).get(axios);
+            console.log(data)
+            let d = await axios(false).put(url, request(data));
             if (d.statusText === 'OK') return result(d.data);
             throw errors(d.status);
         }
         catch (error) {
-            return error;
+            console.log(error);
         }
     },
 
-    put: async (data: Map<string,any>) => {
+    get: async (url: any) => {
         try {
-            let d = await axios(false, true).put("/upload", data);
+            let d = await axios(false).get(url);
             if (d.statusText === 'OK') return result(d.data);
             throw errors(d.status);
         }

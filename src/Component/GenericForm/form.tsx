@@ -7,6 +7,7 @@ import { formInterface } from "./formInterface";
 interface FormClass {
     field: formInterface,
     onChange: React.ChangeEvent<HTMLFormElement> | any,
+    data:any
 };
 
 export class Form extends React.Component<FormClass>{
@@ -24,7 +25,7 @@ export class Form extends React.Component<FormClass>{
                 return <Col md={4}>
                     <FormGroup controlId={params.field.key}>
                         {this.renderLabel(params.field)}
-                        <FormControl type="password"
+                        <FormControl type="password" 
                             onChange={(e: any) => { params.onChange(params.field.key, e.target.value) }} />
                     </FormGroup>
                     {/* {renderError(errors[field.key])} */}
@@ -34,7 +35,7 @@ export class Form extends React.Component<FormClass>{
                 return <Col md={4}>
                     <FormGroup controlId={params.field.key}>
                         {this.renderLabel(params.field)}
-                        <FormControl type="number"
+                        <FormControl type="number" value={params?.data[params?.field?.key]}
                             onChange={(e: any) => {params.onChange(params.field.key, e.target.value) }} />
                     </FormGroup>
                     {/* {renderError(errors[field.key])} */}
@@ -44,7 +45,7 @@ export class Form extends React.Component<FormClass>{
                     return <Col md={4}>
                         <FormGroup controlId={params.field.key}>
                             {this.renderLabel(params.field)}
-                            <FormSelect
+                            <FormSelect value={params?.data[params?.field?.key]}
                                 onChange={(e: any) => { params.onChange(params.field.key, e.target.value) }} >
                                     <option>Please Select</option>
                                     {params.field.options?.map((option)=>{
@@ -59,7 +60,7 @@ export class Form extends React.Component<FormClass>{
                 return <Col md={4}>
                     <FormGroup controlId={params.field.key}>
                         {this.renderLabel(params.field)}
-                        <FormControl type="email"
+                        <FormControl type="email" value={params?.data[params?.field?.key]}
                             onChange={(e: any) => { params.onChange(params.field.key, e.target.value) }} />
                     </FormGroup>
                     {/* {renderError(errors[field.key])} */}
@@ -70,7 +71,7 @@ export class Form extends React.Component<FormClass>{
                 return <Col md={4}>
                     <FormGroup controlId={params.field.key}>
                         {this.renderLabel(params.field)}
-                        <FormControl type="textarea"
+                        <FormControl type="textarea" value={params?.data[params?.field?.key]}
                             onChange={(e: any) => { params.onChange(params.field.key, e.target.value) }} />
                     </FormGroup>
                     {/* {renderError(errors[field.key])} */}
@@ -80,20 +81,20 @@ export class Form extends React.Component<FormClass>{
                 return <Col md={4}>
                     <FormGroup controlId={params.field.key}>
                         {this.renderLabel(params.field)}
-                        <FormControl type="text"
+                        <FormControl type="text" value={params?.data[params?.field?.key]}
                             onChange={(e: any) => { params.onChange(params.field.key, e.target.value) }} />
                     </FormGroup>
                     {/* {renderError(errors[field.key])} */}
                 </Col>
 
             case "fileUpload":
-                return <FileUpload />
+                return <FileUpload value={params?.data[params?.field?.key]} />
 
             default:
                 return <Col md={4}>
                     <FormGroup controlId={params.field.key}>
                         {this.renderLabel(params.field)}
-                        <FormControl type="text"
+                        <FormControl type="text" value={params?.data[params?.field?.key]}
                             onChange={(e: any) => { params.onChange(params.field.key, e.target.value) }} />
                     </FormGroup>
                     {/* {renderError(errors[field.key])} */}

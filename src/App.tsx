@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { SignIn } from './Views/LogIn/LogIn';
 import { RTable } from './Component/Table/RTable';
 import { UserList } from './Views/User/UserList';
+import { UserForm } from './Views/User/UserForm';
 
 function App() {
   return (
@@ -11,6 +12,8 @@ function App() {
       <Routes>
         <Route path="/auth" element={<SignIn />}></Route>
         <Route path="/" element={<UserList />} />
+        <Route path="/UserForm" element={<UserForm />} />
+        <Route path="/UserForm/:id" element={<UserForm />} />
         <Route path="*" element={<h1>No Page Found</h1>} />
       </Routes>
     </BrowserRouter>

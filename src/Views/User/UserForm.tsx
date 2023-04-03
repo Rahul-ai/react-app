@@ -1,0 +1,85 @@
+import { useEffect, useState } from "react";
+import { Form, Button, Row, Container } from "react-bootstrap";
+import { GenericForm } from "../../Component/GenericForm/GenericForm";
+import { Api } from "../../Helpers/axios/axios";
+import { formInterface } from "../../Component/GenericForm/formInterface";
+import { useNavigate,useParams } from "react-router-dom";
+
+export const UserForm = () => {
+  const url = "/user"
+  const navigate = useNavigate();
+  const { id } = useParams()
+  //Form Data
+  const config: formInterface[] = [
+    { type: "text", name: "First Name", key: "firstName", require: true },
+    { type: "text", name: "Last Name", key: "lastName", require: true },
+    // { type: "select", name: "User Name", key: "user", options:["sda","adsad"] , require: true },
+    // { type: "password", name: "Password", require: true, key: "password" },
+  ];
+
+  const [data, setData] = useState<any>();
+
+  useEffect(() => {
+    fetch(id);
+  }, [id]);
+
+  const fetch = (id:any) => {
+    Api.get(`${url}/${id}`).then((res: any) => {
+        console.log(res);
+        setData(res);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const Submit = async (e: React.FormEvent<HTMLInputElement> | any) => {
+    e.preventDefault();
+    if(id){
+        Update();
+    }
+    else{
+
+    }
+    navigate("/UserForm/10");
+  };
+  const Update = () =>{
+    Api.put(`${url}/${id}`,data).then((res: any) => {
+        // console.log(res);
+        // setData(res);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+
+  const Create = () =>{
+    Api.post(url,data).then((res: any) => {
+        console.log(res);
+        // setData(res);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+
+  const onChange = (key: string, value: any) => {
+    console.log({ key, value });
+    let d = { ...data };
+    d[key] = value;
+    setData(d);
+  };
+
+  return (
+    <Container>
+      <Form onSubmit={Submit}>
+        <Row>
+          {GenericForm(config, onChange, data)}
+          <Button className="mt-2" type="submit">
+            Submit
+          </Button>
+        </Row>
+      </Form>
+    </Container>
+  );
+};

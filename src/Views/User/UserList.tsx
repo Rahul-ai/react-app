@@ -1,6 +1,4 @@
-import { format } from "path";
 import { RTable } from "../../Component/Table/RTable";
-import { rTableInterface } from "../../Component/Table/rTableInterface";
 import { TableStructure } from "../../Component/Table/TableStructureInterface";
 
 export const UserList = () => {

@@ -25,6 +25,6 @@ export const FileUpload = (props: any) => {
 
     return <Col md={4} className="file_container">
         <input type="file" onChange={Upload} />
-        {Image && <img className="uploaded_image" src={Image}></img>}
+        {(props.value || Image) && <img className="uploaded_image" src={props.value || Image}></img>}
         </Col>
 }
