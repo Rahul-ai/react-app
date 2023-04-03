@@ -19,7 +19,6 @@ export class RTable  extends React.Component<rTableInterface> {
   fetch = async ( Update = false ) => {
     
     if(Update){
-      console.log(this.state);
       Api.post(this.props.api,{page:this.page,limit:this.limit})
       .then((result: any) => {
         this.setState({
@@ -101,10 +100,9 @@ export class RTable  extends React.Component<rTableInterface> {
   
   render() {  
     if( this.state.items.length !== 0){ 
-    let page = this.state.items[1]/this.state.limit > 1 ? this.state.items[1]/this.state.limit : 1; 
+    let page = Math.ceil(this.state.items[1]/this.state.limit); 
     let params = this.props;
     let data: [] = this.props.data || this.state.items[0];
-    console.log(data);
     return (
       <TabContainer>
         <Table striped bordered hover>
