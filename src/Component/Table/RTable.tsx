@@ -12,11 +12,29 @@ export class RTable  extends React.Component<rTableInterface> {
       page:1,
       items: [],
     };
+    
+    private page = 1;
+    private limit = 10; 
 
-  fetch = async () => {
+  fetch = async ( Update = false ) => {
+    
+    if(Update){
+      console.log(this.state);
+      Api.post(this.props.api,{page:this.page,limit:this.limit})
+      .then((result: any) => {
+        this.setState({
+          isLoaded: false,
+          items: result || [],
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    }
+
     if(this.props.api)
     {
-      return Api.post(this.props.api,this.state);
+      return Api.post(this.props.api,{page:this.page,limit:this.limit});
     }
   };
 
@@ -27,7 +45,7 @@ export class RTable  extends React.Component<rTableInterface> {
       .then((result: any) => {
         this.setState({
           isLoaded: false,
-          items: result,
+          items: result || [],
         });
       })
       .catch((err) => {
@@ -36,10 +54,17 @@ export class RTable  extends React.Component<rTableInterface> {
     }
   }
 
+  
+
   renderHeading = (struct: any) => {
     return struct.map((head: any) => {
       return <th>{head.name}</th>;
     });
+  };
+
+  onClick = (event : any) =>{
+    this.page = parseInt(event.target.text);
+    this.fetch(true);
   };
 
   renderBody = (data: any) => {
@@ -75,7 +100,8 @@ export class RTable  extends React.Component<rTableInterface> {
 
   
   render() {  
-    if(this.props.data ||  this.state.items.length !==0){ 
+    if( this.state.items.length !== 0){ 
+    let page = this.state.items[1]/this.state.limit > 1 ? this.state.items[1]/this.state.limit : 1; 
     let params = this.props;
     let data: [] = this.props.data || this.state.items[0];
     console.log(data);
@@ -95,7 +121,7 @@ export class RTable  extends React.Component<rTableInterface> {
               : this.NrenderBody(data)}
           </tbody>
         </Table>
-        <TablePagination totalPages={()=>this.state.items[0]/this.state.limit} />
+        <TablePagination onClick={this.onClick} totalPages={page} />
       </TabContainer>
     );
   }
