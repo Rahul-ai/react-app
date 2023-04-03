@@ -8,8 +8,6 @@ export class RTable  extends React.Component<rTableInterface> {
     state = {
       error: null,
       isLoaded: false,
-      limit:10,
-      page:1,
       items: [],
     };
     
@@ -52,8 +50,6 @@ export class RTable  extends React.Component<rTableInterface> {
       });
     }
   }
-
-  
 
   renderHeading = (struct: any) => {
     return struct.map((head: any) => {
@@ -100,12 +96,12 @@ export class RTable  extends React.Component<rTableInterface> {
   
   render() {  
     if( this.state.items.length !== 0){ 
-    let page = Math.ceil(this.state.items[1]/this.state.limit); 
+    let page = Math.ceil(this.state.items[1]/this.limit); 
     let params = this.props;
     let data: [] = this.props.data || this.state.items[0];
     return (
-      <TabContainer>
-        <Table striped bordered hover>
+      <TabContainer key={"TabContainer"}>
+        <Table key={"Table"} striped bordered hover>
           <thead>
             <tr>
               {params?.tableStructure
@@ -119,7 +115,7 @@ export class RTable  extends React.Component<rTableInterface> {
               : this.NrenderBody(data)}
           </tbody>
         </Table>
-        <TablePagination onClick={this.onClick} totalPages={page} />
+        <TablePagination key={"TablePagination"} onClick={this.onClick} totalPages={page} />
       </TabContainer>
     );
   }
