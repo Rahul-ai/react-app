@@ -22,8 +22,6 @@ export const UserList = () => {
   return (
     <div className="container" style={{ marginTop: 100 }}>
       <RTable  api="user/withPagination"  tableStructure={tableStructure} />
-      <RTable  api="post/withPagination" />
-      <RTable  api="role/withPagination" />
     </div>
   );
 };
