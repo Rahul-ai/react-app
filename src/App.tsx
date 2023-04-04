@@ -2,7 +2,6 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { SignIn } from './Views/LogIn/LogIn';
-import { RTable } from './Component/Table/RTable';
 import { UserList } from './Views/User/UserList';
 import { UserForm } from './Views/User/UserForm';
 
