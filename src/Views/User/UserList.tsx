@@ -1,23 +1,17 @@
-import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { RTable } from "../../Component/Table/RTable";
 import { TableStructure } from "../../Component/Table/TableStructureInterface";
-import { Api } from "../../Helpers/axios/axios";
 
 export const UserList = () => {
 
   const tableStructure: TableStructure[] = [
     {
-      name: "id",
-      render: (data: any, index: any) => {
-        return index;
-      },
+      name: "id", render: (data: any, index: any) => {
+        return index; },
     },
     {
-      name: "Name",
-      render: (data: any, index: any) => {
-        return `${data.firstName} ${data.lastName}`;
-      },
+      name: "Name",render: (data: any, index: any) => {
+        return `${data.firstName} ${data.lastName}`; },
     },
     { name: "UpdatedAt", key: "updatedAt" },
     { name: "CreatedAt", key: "createdAt" },
