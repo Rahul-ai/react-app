@@ -32,7 +32,8 @@ export const UserList = () => {
 
   return (
     <div className="container" style={{ marginTop: 100 }}>
-      <RTable tableName="user" api="user/withPagination" tableStructure={tableStructure} />
+      <RTable deleteUrl="user" api="user/withPagination" tableStructure={tableStructure} />
+      <RTable deleteUrl="role" api="role/withPagination"  />
     </div>
   );
 };

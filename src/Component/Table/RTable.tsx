@@ -1,5 +1,6 @@
 import React from "react";
 import { FormSelect, TabContainer, Table } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { Api } from "../../Helpers/axios/axios";
 import { TablePagination } from "../Pagination/TablePagination";
 import { rTableInterface } from "./rTableInterface";
@@ -28,13 +29,13 @@ export class RTable extends React.Component<rTableInterface> {
         });
     }
 
-    if (this.props.api && !Update ) {
+    if (this.props.api && !Update) {
       return Api.post(this.props.api, { page: this.page, limit: this.limit });
     }
   };
 
-  SrNo(index:number):number{
-    return ((this.page-1)*10)+index;
+  SrNo(index: number): number {
+    return (this.page - 1) * 10 + index;
   }
 
   componentDidMount(): void {
@@ -58,12 +59,14 @@ export class RTable extends React.Component<rTableInterface> {
     });
   };
 
-  onDelete=(id:number)=>{
-    Api.delete(`${this.props.tableName}/${id}`).then(()=>{
-      this.fetch(true);
-    }).catch((error)=>{
-      console.log(error)
-    });
+  onDelete = (id: number) => {
+    Api.delete(`${this.props.deleteUrl}/${id}`)
+      .then(() => {
+        this.fetch(true);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   onClick = (event: any) => {
@@ -78,27 +81,28 @@ export class RTable extends React.Component<rTableInterface> {
   };
 
   renderBody = (data: any) => {
-    return data.map((d: any,index:any) => {
-      return <tr>{this.renderData(d,index+1)}</tr>;
+    return data.map((d: any, index: any) => {
+      return <tr>{this.renderData(d, index + 1)}</tr>;
     });
   };
 
-  renderData = (data: any,index:any) =>
+  renderData = (data: any, index: any) =>
     this.props.tableStructure?.map((format: any) => {
       if (format.render && format.name == "Action") {
         console.log(format.name);
-        return <td>{format.render(data,this.onDelete)}</td>;
-      }
-      else if (format.render) {
-        return <td>{format.render(data,this.SrNo(index))}</td>;
+        return <td>{format.render(data, this.onDelete)}</td>;
+      } else if (format.render) {
+        return <td>{format.render(data, this.SrNo(index))}</td>;
       }
       return <td>{data[format.key]}</td>;
     });
 
   NrenderHeading = (data: any) => {
-    return Object.keys(data[0]).map((key: any) => {
+    let a = Object.keys(data[0]).map((key: any) => {
       return <th>{key}</th>;
     });
+    let b = <th>Action</th>;
+    return [...a, b];
   };
 
   NrenderBody = (data: any) => {
@@ -107,16 +111,24 @@ export class RTable extends React.Component<rTableInterface> {
     });
   };
 
-  NrenderData = (data: any) =>
-    Object.keys(data).map((key: any) => {
+  NrenderData = (data: any) => {
+    let a = Object.keys(data).map((key: any) => {
       return <td>{data[key]}</td>;
     });
+    let b = (
+      <tr>
+        <Link to={`/UserForm/${data.id}`}>Edit </Link>
+        <Link to="#" onClick={() => {this.onDelete(data.id);}}>
+          Delete
+        </Link>
+      </tr>
+    );
+    return [...a, b];
+  };
 
-  totalPages():number{
-   return Math.ceil(this.state.items[1] / this.limit)
+  totalPages(): number {
+    return Math.ceil(this.state.items[1] / this.limit);
   }
-
- 
 
   render() {
     if (this.state.items.length !== 0) {
@@ -140,7 +152,7 @@ export class RTable extends React.Component<rTableInterface> {
           </Table>
           <TablePagination
             key={"TablePagination"}
-            onSelectClick = {this.onSelectClick}
+            onSelectClick={this.onSelectClick}
             onClick={this.onClick}
             totalPages={this.totalPages()}
           />
@@ -149,6 +161,3 @@ export class RTable extends React.Component<rTableInterface> {
     }
   }
 }
-
-
-
