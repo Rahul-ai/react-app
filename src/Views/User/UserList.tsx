@@ -1,7 +1,12 @@
+import { useRef } from "react";
+import { Link } from "react-router-dom";
 import { RTable } from "../../Component/Table/RTable";
 import { TableStructure } from "../../Component/Table/TableStructureInterface";
+import { Api } from "../../Helpers/axios/axios";
 
 export const UserList = () => {
+  let ref = useRef<RTable | any>();
+  let name = 'user';
   const tableStructure: TableStructure[] = [
     {
       name: "id",
@@ -17,13 +22,17 @@ export const UserList = () => {
     },
     { name: "UpdatedAt", key: "updatedAt" },
     { name: "CreatedAt", key: "createdAt" },
+    { name: "Action",  
+    render: (data: any, onDelete: any) => {
+      console.log(ref.current)
+      return <><Link to={`/UserForm/${data.id}`}>Edit </Link>
+      <Link to="#" onClick={()=>{onDelete(data.id)}}>Delete</Link></>;
+    },},
   ];
 
   return (
     <div className="container" style={{ marginTop: 100 }}>
-      <RTable  api="user/withPagination"  tableStructure={tableStructure} />
-      {/* <RTable  api="role/withPagination"  />
-      <RTable  api="post/withPagination"  tableStructure={tableStructure} /> */}
+      <RTable tableName="user" api="user/withPagination" tableStructure={tableStructure} />
     </div>
   );
 };

@@ -33,6 +33,10 @@ export class RTable extends React.Component<rTableInterface> {
     }
   };
 
+  SrNo(index:number):number{
+    return ((this.page-1)*10)+index;
+  }
+
   componentDidMount(): void {
     if (this.props.api) {
       this.fetch()
@@ -54,6 +58,14 @@ export class RTable extends React.Component<rTableInterface> {
     });
   };
 
+  onDelete=(id:number)=>{
+    Api.delete(`${this.props.tableName}/${id}`).then(()=>{
+      this.fetch(true);
+    }).catch((error)=>{
+      console.log(error)
+    });
+  };
+
   onClick = (event: any) => {
     this.page = parseInt(event.target.text);
     this.fetch(true);
@@ -71,10 +83,14 @@ export class RTable extends React.Component<rTableInterface> {
     });
   };
 
-  renderData = (data: any,index:BigInteger) =>
+  renderData = (data: any,index:any) =>
     this.props.tableStructure?.map((format: any) => {
-      if (format.render) {
-        return <td>{format.render(data,index)}</td>;
+      if (format.render && format.name == "Action") {
+        console.log(format.name);
+        return <td>{format.render(data,this.onDelete)}</td>;
+      }
+      else if (format.render) {
+        return <td>{format.render(data,this.SrNo(index))}</td>;
       }
       return <td>{data[format.key]}</td>;
     });
@@ -96,9 +112,14 @@ export class RTable extends React.Component<rTableInterface> {
       return <td>{data[key]}</td>;
     });
 
+  totalPages():number{
+   return Math.ceil(this.state.items[1] / this.limit)
+  }
+
+ 
+
   render() {
     if (this.state.items.length !== 0) {
-      let page = Math.ceil(this.state.items[1] / this.limit);
       let params = this.props;
       let data: [] = this.props.data || this.state.items[0];
       return (
@@ -121,10 +142,13 @@ export class RTable extends React.Component<rTableInterface> {
             key={"TablePagination"}
             onSelectClick = {this.onSelectClick}
             onClick={this.onClick}
-            totalPages={page}
+            totalPages={this.totalPages()}
           />
         </TabContainer>
       );
     }
   }
 }
+
+
+

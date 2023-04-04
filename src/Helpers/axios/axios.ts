@@ -87,9 +87,9 @@ export const Api = {
         }
     },
 
-    delete: async (id: any) => {
+    delete: async (url:string) => {
         try {
-            let d = await axios(false).delete("/login",id);
+            let d = await axios(false).delete(url);
             if (d.statusText === 'OK') return result(d.data);
             throw errors(d.status);
         }

@@ -5,4 +5,5 @@ export interface rTableInterface{
     api?:string
     tableStructure?:TableStructure[]
     data?:[]
+    tableName:string
 } 
