@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Form, Button, Row, Container } from "react-bootstrap";
+import { useEffect, useState } from "react";                                                                                                                                                                                                                                                                                                                                                                                                                
+import { Form, Button, Row, Container,Col } from "react-bootstrap";
 import { GenericForm } from "../../Component/GenericForm/GenericForm";
 import { Api } from "../../Helpers/axios/axios";
 import { formInterface } from "../../Component/GenericForm/formInterface";
@@ -20,7 +20,9 @@ export const UserForm = () => {
   const [data, setData] = useState<any>();
 
   useEffect(() => {
-    fetch(id);
+    if(id){
+      fetch(id);
+    }
   }, [id]);
 
   const fetch = (id:any) => {
@@ -75,9 +77,12 @@ export const UserForm = () => {
       <Form onSubmit={Submit}>
         <Row>
           {GenericForm(config, onChange, data)}
-          <Button className="mt-2" type="submit">
+          <Col md={4}>
+          <Button className="mt-2" style={{ width:200,height:50}} type="submit">
+          
             Submit
           </Button>
+          </Col>
         </Row>
       </Form>
     </Container>

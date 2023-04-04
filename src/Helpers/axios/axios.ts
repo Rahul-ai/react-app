@@ -4,10 +4,9 @@ import { Api_url } from "../config/config";
 
 export const axios = (auth: boolean = true, multi: boolean = false) => {
 
-    const Accept = '*/*';
     const header: Partial<RawAxiosRequestHeaders> = {
         "Content-Type":'application/json',
-        Accept: Accept,
+        Accept: '*/*',
     }
 
     let Token = store.getState()?.Token;

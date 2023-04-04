@@ -10,8 +10,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/auth" element={<SignIn />}></Route>
-        <Route path="/" element={<UserList />} />
+        <Route path="/" element={<SignIn />}></Route>
+        <Route path="/UserList" element={<UserList />} />
         <Route path="/UserForm" element={<UserForm />} />
         <Route path="/UserForm/:id" element={<UserForm />} />
         <Route path="*" element={<h1>No Page Found</h1>} />
