@@ -11,8 +11,8 @@ export const UserForm = () => {
   const { id } = useParams()
   //Form Data
   const config: formInterface[] = [
-    { type: "text", name: "First Name", key: "firstName", require: true },
-    { type: "text", name: "Last Name", key: "lastName", require: true },
+    { type: "text", name: "First Name", key: "firstName", require: true, md:12 },
+    { type: "text", name: "Last Name", key: "lastName", require: true, md:12 },
     // { type: "select", name: "User Name", key: "user", options:["sda","adsad"] , require: true },
     // { type: "password", name: "Password", require: true, key: "password" },
   ];
@@ -75,11 +75,10 @@ export const UserForm = () => {
   return (
     <Container>
       <Form onSubmit={Submit}>
-        <Row>
+        <Row style={{ width:500,height:50}}>
           {GenericForm(config, onChange, data)}
-          <Col md={4}>
+          <Col md={12}>
           <Button className="mt-2" style={{ width:200,height:50}} type="submit">
-          
             Submit
           </Button>
           </Col>

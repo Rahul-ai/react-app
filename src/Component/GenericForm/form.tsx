@@ -22,7 +22,7 @@ export class Form extends React.Component<FormClass>{
         let params = this.props;
         switch (this.props.field.type) {
             case "password":
-                return <Col md={4}>
+                return <Col md={params.field.md || 4}>
                     <FormGroup controlId={params.field.key}>
                         {this.renderLabel(params.field)}
                         <FormControl type="password" 
@@ -32,7 +32,7 @@ export class Form extends React.Component<FormClass>{
                 </Col>
 
             case "number":
-                return <Col md={4}>
+                return <Col md={params.field.md || 4}>
                     <FormGroup controlId={params.field.key}>
                         {this.renderLabel(params.field)}
                         <FormControl type="number" value={params?.data[params?.field?.key]}
@@ -42,7 +42,7 @@ export class Form extends React.Component<FormClass>{
                 </Col>   
                 
                 case "select":
-                    return <Col md={4}>
+                    return <Col md={params.field.md || 4}>
                         <FormGroup controlId={params.field.key}>
                             {this.renderLabel(params.field)}
                             <FormSelect value={params?.data[params?.field?.key]}
@@ -57,7 +57,7 @@ export class Form extends React.Component<FormClass>{
                     </Col>              
             
             case "email":
-                return <Col md={4}>
+                return <Col md={params.field.md || 4}>
                     <FormGroup controlId={params.field.key}>
                         {this.renderLabel(params.field)}
                         <FormControl type="email" value={params?.data[params?.field?.key]}
@@ -68,7 +68,7 @@ export class Form extends React.Component<FormClass>{
 
 
             case "textarea":
-                return <Col md={4}>
+                return <Col md={params.field.md || 4}>
                     <FormGroup controlId={params.field.key}>
                         {this.renderLabel(params.field)}
                         <FormControl type="textarea" value={params?.data[params?.field?.key]}
@@ -78,7 +78,7 @@ export class Form extends React.Component<FormClass>{
                 </Col>
 
             case "text":
-                return <Col md={4}>
+                return <Col md={params.field.md || 4}>
                     <FormGroup controlId={params.field.key}>
                         {this.renderLabel(params.field)}
                         <FormControl type="text" value={params?.data[params?.field?.key]}
@@ -91,7 +91,7 @@ export class Form extends React.Component<FormClass>{
                 return <FileUpload value={params?.data[params?.field?.key]} />
 
             default:
-                return <Col md={4}>
+                return <Col md={params.field.md || 4}>
                     <FormGroup controlId={params.field.key}>
                         {this.renderLabel(params.field)}
                         <FormControl type="text" value={params?.data[params?.field?.key]}

@@ -4,4 +4,5 @@ export interface formInterface{
     name:string
     require?:boolean
     options?:string[]
+    md?:number
 }
