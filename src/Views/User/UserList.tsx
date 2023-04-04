@@ -5,8 +5,7 @@ import { TableStructure } from "../../Component/Table/TableStructureInterface";
 import { Api } from "../../Helpers/axios/axios";
 
 export const UserList = () => {
-  let ref = useRef<RTable | any>();
-  let name = 'user';
+
   const tableStructure: TableStructure[] = [
     {
       name: "id",
@@ -22,11 +21,9 @@ export const UserList = () => {
     },
     { name: "UpdatedAt", key: "updatedAt" },
     { name: "CreatedAt", key: "createdAt" },
-    { name: "Action",  
-    render: (data: any, onDelete: any) => {
-      console.log(ref.current)
+    { name: "Action", render: (data: any, onDelete: any) => {
       return <><Link to={`/UserForm/${data.id}`}>Edit </Link>
-      <Link to="#" onClick={()=>{onDelete(data.id)}}>Delete</Link></>;
+          <Link to="#" onClick={()=>{onDelete(data.id)}}>Delete</Link></>;
     },},
   ];
 
