@@ -7,7 +7,8 @@ export const UserList = () => {
   const tableStructure: TableStructure[] = [
     {
       name: "id", render: (data: any, index: any) => {
-        return index; },
+        return index; 
+      },
     },
     {
       name: "Name",render: (data: any, index: any) => {
