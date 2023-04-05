@@ -5,11 +5,17 @@ import { Api } from "../../Helpers/axios/axios";
 import { TablePagination } from "../Pagination/TablePagination";
 import { rTableInterface } from "./rTableInterface";
 
+export interface state {
+  error:string|null
+  isLoaded:boolean
+  items: [[],number]
+}
+
 export class RTable extends React.Component<rTableInterface> {
-  state = {
+  state:state = {
     error: null,
     isLoaded: false,
-    items: [],
+    items: [[],1],
   };
 
   private page = 1;
@@ -42,6 +48,7 @@ export class RTable extends React.Component<rTableInterface> {
     if (this.props.api) {
       this.fetch()
         .then((result: any) => {
+          console.log(result);
           this.setState({
             isLoaded: false,
             items: result || [],
@@ -89,7 +96,6 @@ export class RTable extends React.Component<rTableInterface> {
   renderData = (data: any, index: any) =>
     this.props.tableStructure?.map((format: any) => {
       if (format.render && format.name == "Action") {
-        console.log(format.name);
         return <td>{format.render(data, this.onDelete)}</td>;
       } else if (format.render) {
         return <td>{format.render(data, this.SrNo(index))}</td>;
@@ -131,9 +137,9 @@ export class RTable extends React.Component<rTableInterface> {
   }
 
   render() {
-    if (this.state.items.length !== 0) {
+    if (this.state?.items[0].length !== 0) {
       let params = this.props;
-      let data: [] = this.props.data || this.state.items[0];
+      let data = this.props.data || this.state.items[0];
       return (
         <TabContainer key={"TabContainer"}>
           <Table key={"Table"} striped bordered hover>
@@ -158,6 +164,22 @@ export class RTable extends React.Component<rTableInterface> {
           />
         </TabContainer>
       );
+    }
+    else{
+      return  <TabContainer key={"TabContainer"}>
+      <Table key={"Table"} striped bordered hover>
+        <thead>
+          <tr>
+           <th align="center">nodata</th>
+          </tr>
+        </thead>
+        {/* <tbody>
+          {params?.tableStructure
+            ? this.renderBody(data)
+            : this.NrenderBody(data)}
+        </tbody> */}
+      </Table>
+    </TabContainer>
     }
   }
 }
