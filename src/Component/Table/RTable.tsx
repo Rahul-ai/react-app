@@ -122,9 +122,9 @@ export class RTable extends React.Component<rTableInterface> {
     });
     let b = (
       <tr>
-        <Link to={`/UserForm/${data.id}`}>Edit </Link>
+        <Link to={`/UserForm/${data.id}`}><img width="16px" src="../../../images/edit.svg" alt="edit" /></Link>
         <Link to="#" onClick={() => {this.onDelete(data.id);}}>
-          Delete
+        <img width="16px" src="../../../images/delete.svg" alt="delete" />
         </Link>
       </tr>
     );

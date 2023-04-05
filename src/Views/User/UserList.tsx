@@ -16,8 +16,10 @@ export const UserList = () => {
     { name: "UpdatedAt", key: "updatedAt" },
     { name: "CreatedAt", key: "createdAt" },
     { name: "Action", render: (data: any, onDelete: any) => {
-      return <><Link to={`/UserForm/${data.id}`}>Edit </Link>
-          <Link to="#" onClick={()=>{onDelete(data.id)}}>Delete</Link></>;
+      return <><Link to={`/UserForm/${data.id}`}><img width="16px" src="../../../images/edit.svg" alt="edit" /></Link>
+          <Link to="#" onClick={()=>{onDelete(data.id)}}>
+            <img width="16px" src="../../../images/delete.svg" alt="delete" />
+          </Link></>;
     },},
   ];
 
