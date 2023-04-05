@@ -4,8 +4,6 @@ import { TableStructure } from "../../Component/Table/TableStructureInterface";
 import { useRef } from "react";
 
 export const UserList = () => {
-  const u = useRef<RTable|any>();
-  let r =  useRef<RTable|any>();
   const tableStructure: TableStructure[] = [
     {
       name: "id", render: (data: any, index: any) => {
@@ -26,8 +24,8 @@ export const UserList = () => {
   return (
     <div className="container" style={{ marginTop: 100 }}>
       <RTable deleteUrl="user/softDelete" api="user/withPagination" tableStructure={tableStructure} />
-      {/* <RTable ref={r} deleteUrl="role/softDelete" api="role/withPagination"  /> */}
-      {/* <RTable deleteUrl="role/softDelete" api="role/onlyDeleted"  /> */}
+      <RTable deleteUrl="role/softDelete" api="role/withPagination"  />
+      <RTable deleteUrl="role/softDelete" api="role/onlyDeleted"  />
     </div>
   );
 };

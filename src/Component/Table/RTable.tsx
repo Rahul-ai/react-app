@@ -48,7 +48,6 @@ export class RTable extends React.Component<rTableInterface> {
     if (this.props.api) {
       this.fetch()
         .then((result: any) => {
-          console.log(result);
           this.setState({
             isLoaded: false,
             items: result || [],
@@ -170,14 +169,10 @@ export class RTable extends React.Component<rTableInterface> {
       <Table key={"Table"} striped bordered hover>
         <thead>
           <tr>
-           <th align="center">nodata</th>
+           <th align="right">nodata</th>
           </tr>
         </thead>
-        {/* <tbody>
-          {params?.tableStructure
-            ? this.renderBody(data)
-            : this.NrenderBody(data)}
-        </tbody> */}
+
       </Table>
     </TabContainer>
     }
