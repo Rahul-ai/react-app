@@ -41,28 +41,27 @@ export const UserForm = () => {
         Update();
     }
     else{
-
+      Create();
     }
-    navigate("/UserForm/10");
+    navigate("/UserForm");
   };
   const Update = () =>{
     Api.put(`${url}/${id}`,data).then((res: any) => {
-        // console.log(res);
-        // setData(res);
+
       })
       .catch((e) => {
         console.log(e);
-      });
+      }); 
   }
 
   const Create = () =>{
-    Api.post(url,data).then((res: any) => {
-        console.log(res);
-        // setData(res);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    console.log("data");
+        Api.post(`${url}`,data).then((res: any) => {
+          console.log(res);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
   }
 
   const onChange = (key: string, value: any) => {
