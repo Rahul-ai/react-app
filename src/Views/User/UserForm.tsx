@@ -8,7 +8,8 @@ import { useNavigate,useParams } from "react-router-dom";
 export const UserForm = () => {
   const url = "/user"
   const navigate = useNavigate();
-  const { id } = useParams()
+  const { id } = useParams();
+
   //Form Data
   const config: formInterface[] = [
     { type: "text", name: "First Name", key: "firstName", require: true, md:12 },
@@ -43,14 +44,17 @@ export const UserForm = () => {
     else{
       Create();
     }
-    navigate("/UserForm");
+   
   };
+
   const Update = () =>{
     Api.put(`${url}/${id}`,data).then((res: any) => {
-
+        console.log(res);
       })
       .catch((e) => {
         console.log(e);
+      }).finally(()=>{
+        navigate(`/UserForm/${id}`);
       }); 
   }
 
@@ -61,7 +65,9 @@ export const UserForm = () => {
         })
         .catch((e) => {
           console.log(e);
-        });
+        }).finally(()=>{
+          navigate(`/UserForm`);
+        }); ;
   }
 
   const onChange = (key: string, value: any) => {
