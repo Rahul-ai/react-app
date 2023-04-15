@@ -7,30 +7,37 @@ import { formInterface } from "../../Component/GenericForm/formInterface";
 import { UserDetails } from "../../Redux/Action/Action";
 import { store } from "../../Redux/store/Store";
 import { useNavigate } from "react-router-dom";
-import { useSocket } from "../../Component/Socket/Socket";
+import { useSocket } from "../../Helpers/Socket/Socket";
 
 const Createmeet = ({user}:any) => {
     const navigate = useNavigate();
-    
+    const {socket}:any = useSocket();
     //Form Data 
     const config: formInterface[] = [
         { type: "text", name: "email", key: "email", require: true },
         // { type: "select", name: "User Name", key: "user", options:["sda","adsad"] , require: true },
-        { type: "text", name: "room Id", require: true, key: "room_id" },
+        { type: "text", name: "room Id", require: true, key: "roomId" },
     ];
 
     const [data, setData] = useState<any>();
 
+ 
+    const handelRoomJoined = ({roomId}:any) =>{
+        navigate(`/joinedroom/${roomId}`)
+    }
+    
     useEffect(()=>{
-        window.localStorage.clear();
-    },[])
+        socket.on("joined-room",handelRoomJoined)
+    },[socket])
 
-    // const Submit = async (e: React.FormEvent<HTMLInputElement> | any) => {
-    //     e.preventDefault();
-    //     let user = await Api.logIn(data);
-    //     store.dispatch(UserDetails(user));
-    //     navigate("/rahul")
-    // };
+    
+
+    const Submit = async (e: React.FormEvent<HTMLInputElement> | any) => {
+        e.preventDefault();
+        // console.log("sadas")
+        socket.emit("join-room", data);
+        // navigate("/rahul")
+    };
 
     const onChange = (key: string, value: any) => {
         console.log({key,value})
@@ -38,21 +45,19 @@ const Createmeet = ({user}:any) => {
         d[key] = value;
         setData(d);
     };
-    const {socket}:any = useSocket();
+    
 
-    socket.on("hello", (arg:any)=>{
-        console.log(arg);
-    })
+   
 
     return <Container>
-        {/* <Form onSubmit={Submit}> */}
+        <Form onSubmit={Submit}>
             <Row>
                 {GenericForm(config, onChange)}
                 <Button className="mt-2" type="submit">
-                    Submit
+                    Start meet
                 </Button>
             </Row>
-        {/* </Form> */}
+        </Form>
     </Container>
 };
 export const CreatM = RenderComponent(Createmeet);
