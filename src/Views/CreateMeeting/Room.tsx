@@ -9,13 +9,14 @@ export const RoomPage =()=>{
     const handelNewUserJoined = useCallback(async({email}:any)=>{
       console.log("new User",email)
       const offer = await createOffer();
-      socket.emmit("call-user",{email,offer});
+      socket.emit("call-user",{email,offer});
     },[])
 
-    const handelIncommingCall = useCallback(async({fromEmail,offer} :any)=>{
+    const handelIncommingCall = useCallback(async({from,offer} :any)=>{
+        console.log(from);
         console.log(offer);
         const ans = await createAnswer(offer);
-        socket.emit('call-accepted',{email:fromEmail,ans:ans});
+        socket.emit('call-accepted',{email:from,ans:ans});
     },[]);
 
     const handelAcceptCall = useCallback(async({ans} :any)=>{
@@ -24,6 +25,7 @@ export const RoomPage =()=>{
     },[]);
 
     useEffect(()=>{
+        console.log("started");
         socket.on('User-joined',handelNewUserJoined);
         socket.on('incomming-call', handelIncommingCall);
         socket.on('call-accept',handelAcceptCall);
@@ -32,7 +34,7 @@ export const RoomPage =()=>{
             socket.off('incomming-call', handelIncommingCall);
             socket.off('call-accept',handelAcceptCall);
         }
-    },[socket,handelNewUserJoined,handelIncommingCall]);
+    },[socket,handelNewUserJoined,handelIncommingCall,handelAcceptCall]);
 
 return (
     <div>
