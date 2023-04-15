@@ -1,8 +1,11 @@
-import React, { useCallback, useEffect } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import { useSocket } from "../../Helpers/Socket/Socket"
 import { usePeer } from "../../Helpers/Peer/Peer";
+import ReactPlayer from "react-player";
 
 export const RoomPage =()=>{
+    const [stream, setStream] = useState<any>();
+    const [remoteStream, setRemoteStream] = useState();
     const { socket }:any = useSocket();
     const { Peer, createOffer, createAnswer, setRemoteAnswer }:any = usePeer();
    
@@ -24,6 +27,11 @@ export const RoomPage =()=>{
         console.log(ans);
     },[]);
 
+    const getUserMediaStream = useCallback(async()=>{
+        const stream = await navigator.mediaDevices.getUserMedia({audio:true,video:true});
+        setStream(stream);
+    },[]);
+
     useEffect(()=>{
         console.log("started");
         socket.on('User-joined',handelNewUserJoined);
@@ -36,9 +44,14 @@ export const RoomPage =()=>{
         }
     },[socket,handelNewUserJoined,handelIncommingCall,handelAcceptCall]);
 
+    useEffect(()=>{
+        getUserMediaStream();
+    },[]);
+
 return (
     <div>
-<h1>sadasd</h1>
+        <h4>Room Joined</h4>
+        <ReactPlayer url={stream} playing muted/>
     </div>
 )
 }
