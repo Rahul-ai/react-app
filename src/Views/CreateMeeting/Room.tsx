@@ -46,11 +46,11 @@ export const RoomPage =()=>{
 
     useEffect(()=>{
         socket.on('User-joined',handelNewUserJoined);
-        socket.on('incomming-call', handelIncommingCall);
+        socket.on('incomming-call',handelIncommingCall);
         socket.on('call-accept',handelAcceptCall);
         return()=>{
             socket.off('User-joined',handelNewUserJoined);
-            socket.off('incomming-call', handelIncommingCall);
+            socket.off('incomming-call',handelIncommingCall);
             socket.off('call-accept',handelAcceptCall);
         }
     },[socket,handelNewUserJoined,handelIncommingCall,handelAcceptCall]);
