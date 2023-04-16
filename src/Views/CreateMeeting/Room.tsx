@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useSocket } from "../../Helpers/Socket/Socket"
 import { usePeer } from "../../Helpers/Peer/Peer";
 import ReactPlayer from "react-player";
@@ -29,7 +29,7 @@ export const RoomPage =()=>{
     const getUserMediaStream = useCallback(async()=>{
         const stream = await navigator.mediaDevices.getUserMedia({audio:true,video:true});
         setStream(stream);    
-        sendTracks(stream)
+        sendTracks(stream);
     },[sendTracks]);
 
     const handelNegotiationNeeded = useCallback(async() =>{
