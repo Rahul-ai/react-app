@@ -45,7 +45,6 @@ export const RoomPage =()=>{
     },[])
 
     useEffect(()=>{
-        console.log("started");
         socket.on('User-joined',handelNewUserJoined);
         socket.on('incomming-call', handelIncommingCall);
         socket.on('call-accept',handelAcceptCall);
