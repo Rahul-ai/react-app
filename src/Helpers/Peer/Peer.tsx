@@ -47,7 +47,6 @@ const sendTracks = (stream:MediaStream) =>{
 
 const handelStreamTrack = useCallback(async(ev:any) =>{
     const stream = ev.streams;
-    console.log("stream");
     setRemoteStream(stream[0]);
 },[]);
 

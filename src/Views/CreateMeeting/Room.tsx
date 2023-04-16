@@ -11,14 +11,12 @@ export const RoomPage =()=>{
     const { peer, createOffer, createAnswer, setRemoteAnswer, sendTracks,remoteStream }:any = usePeer();
    
     const handelNewUserJoined = useCallback(async({email}:any)=>{
-      console.log("new User",email)
       setRemoteId(email);
       const offer = await createOffer();
       socket.emit("call-user",{email,offer});
     },[])
 
     const handelIncommingCall = useCallback(async({from,offer} :any)=>{
-        console.log(from);
         const ans = await createAnswer(offer);
         socket.emit('call-accepted',{email:from,ans:ans});
         setRemoteId(from);
@@ -26,7 +24,6 @@ export const RoomPage =()=>{
 
     const handelAcceptCall = useCallback(async({ans} :any)=>{
         await setRemoteAnswer(ans);
-        console.log(ans);
     },[]);
 
     const getUserMediaStream = useCallback(async()=>{
