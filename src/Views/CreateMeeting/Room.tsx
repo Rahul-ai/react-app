@@ -5,21 +5,23 @@ import ReactPlayer from "react-player";
 
 export const RoomPage =()=>{
     const [stream, setStream] = useState<any>();
-    const [remoteStream, setRemoteStream] = useState();
+    const [remoteId, setRemoteId] = useState<any>();  
+
     const { socket }:any = useSocket();
-    const { Peer, createOffer, createAnswer, setRemoteAnswer }:any = usePeer();
+    const { peer, createOffer, createAnswer, setRemoteAnswer, sendTracks,remoteStream }:any = usePeer();
    
     const handelNewUserJoined = useCallback(async({email}:any)=>{
       console.log("new User",email)
+      setRemoteId(email);
       const offer = await createOffer();
       socket.emit("call-user",{email,offer});
     },[])
 
     const handelIncommingCall = useCallback(async({from,offer} :any)=>{
         console.log(from);
-        console.log(offer);
         const ans = await createAnswer(offer);
         socket.emit('call-accepted',{email:from,ans:ans});
+        setRemoteId(from);
     },[]);
 
     const handelAcceptCall = useCallback(async({ans} :any)=>{
@@ -29,8 +31,21 @@ export const RoomPage =()=>{
 
     const getUserMediaStream = useCallback(async()=>{
         const stream = await navigator.mediaDevices.getUserMedia({audio:true,video:true});
-        setStream(stream);
-    },[]);
+        setStream(stream);    
+        sendTracks(stream)
+    },[sendTracks]);
+
+    const handelNegotiationNeeded = useCallback(async() =>{
+        const offer = peer.localDescription;
+        socket.emit('call-user',{email:remoteId,offer:offer});
+    },[peer, peer.localDescription,remoteId, socket]);
+
+    useEffect(()=>{
+        peer.addEventListener('negotiationneeded',handelNegotiationNeeded);
+        return()=>{
+            peer.removeEventListener('negotiationneeded',handelNegotiationNeeded);
+          }
+    },[])
 
     useEffect(()=>{
         console.log("started");
@@ -51,7 +66,9 @@ export const RoomPage =()=>{
 return (
     <div>
         <h4>Room Joined</h4>
+        <h4>{remoteId}</h4>
         <ReactPlayer url={stream} playing muted/>
+        <ReactPlayer url={remoteStream} playing muted/>
     </div>
 )
 }
