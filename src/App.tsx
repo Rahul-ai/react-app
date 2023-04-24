@@ -8,6 +8,7 @@ import { CreatM } from './Views/CreateMeeting/Createmeet';
 import { SocketProvider } from './Helpers/Socket/Socket';
 import { RoomPage } from './Views/CreateMeeting/Room';
 import { PeerProvider } from './Helpers/Peer/Peer';
+import { SecurityLog } from './Views/SecurityLog/SecurityLog';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/" element={<SignIn />}></Route>
         <Route path="/room" element={<CreatM />}></Route>
         <Route path="/UserList" element={<UserList />} />
+        <Route path="/Logs" element={<SecurityLog/>} />
         <Route path="/UserForm" element={<UserForm />} />
         <Route path="/UserForm/:id" element={<UserForm />} />
         <Route path="/joinedroom/:id" element={<RoomPage/>} />

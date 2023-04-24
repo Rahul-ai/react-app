@@ -3,7 +3,8 @@ import { RTable } from "../../Component/Table/RTable";
 import { TableStructure } from "../../Component/Table/TableStructureInterface";
 import { useRef } from "react";
 
-export const UserList = () => {
+export const SecurityLog = () =>{
+
   const tableStructure: TableStructure[] = [
     {
       name: "id", render: (data: any, index: any) => {
@@ -11,8 +12,8 @@ export const UserList = () => {
       },
     },
     {
-      name: "Name",render: (data: any, index: any) => {
-        return `${data.firstName} ${data.lastName}`; },
+      name: "What",render: (data: any, index: any) => {
+        return `${data.resion}`; },
     },
     { name: "UpdatedAt", key: "updatedAt" },
     { name: "CreatedAt", key: "createdAt" },
@@ -25,16 +26,11 @@ export const UserList = () => {
           </Link></>;
     },},
   ];
-
   
-  return (
-    <div className="container" style={{ marginTop: 100 }}>
-      <h3>User Table</h3>
-      <RTable deleteUrl="user/softDelete" api="user/withPagination" tableStructure={tableStructure} />
-      <h3>Role Table</h3>
-      <RTable deleteUrl="role/softDelete" api="role/withPagination"  />
-      <h3>Deleted Role Table</h3>
-      <RTable deleteUrl="role/restore" api="role/onlyDeleted" />
-    </div>
-  );
+      return (
+        <div className="container" style={{ marginTop: 100 }}>
+          <h3>Log Table</h3>
+          <RTable deleteUrl="Log/softDelete" api="log/withPagination" tableStructure={tableStructure} />
+        </div>
+      );
 };
