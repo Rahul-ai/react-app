@@ -17,6 +17,9 @@ export const SecurityLog = () =>{
     },
     { name: "UpdatedAt", key: "updatedAt" },
     { name: "CreatedAt", key: "createdAt" },
+    { name: "Modification", render:(data:any)=>{
+      return<><p>{JSON.stringify(data.data)}</p></>
+    } },
     { name: "Action", render: (data: any, onDelete: any) => {
       return <><Link to={`/UserForm/${data.id}`}>
         <img width="16px" src="../../../images/edit.svg" alt="edit" />

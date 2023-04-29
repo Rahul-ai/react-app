@@ -35,7 +35,7 @@ export class Form extends React.Component<FormClass>{
                 return <Col md={params.field.md || 4}>
                     <FormGroup controlId={params.field.key}>
                         {this.renderLabel(params.field)}
-                        <FormControl type="number" value={params?.data[params?.field?.key]}
+                        <FormControl type="number" value={params?.data}
                             onChange={(e: any) => {params.onChange(params.field.key, e.target.value) }} />
                     </FormGroup>
                     {/* {renderError(errors[field.key])} */}
@@ -45,7 +45,7 @@ export class Form extends React.Component<FormClass>{
                     return <Col md={params.field.md || 4}>
                         <FormGroup controlId={params.field.key}>
                             {this.renderLabel(params.field)}
-                            <FormSelect value={params?.data[params?.field?.key]}
+                            <FormSelect value={params?.data}
                                 onChange={(e: any) => { params.onChange(params.field.key, e.target.value) }} >
                                     <option>Please Select</option>
                                     {params.field.options?.map((option)=>{
@@ -60,7 +60,7 @@ export class Form extends React.Component<FormClass>{
                 return <Col md={params.field.md || 4}>
                     <FormGroup controlId={params.field.key}>
                         {this.renderLabel(params.field)}
-                        <FormControl type="email" value={params?.data[params?.field?.key]}
+                        <FormControl type="email" value={params?.data}
                             onChange={(e: any) => { params.onChange(params.field.key, e.target.value) }} />
                     </FormGroup>
                     {/* {renderError(errors[field.key])} */}
@@ -71,7 +71,7 @@ export class Form extends React.Component<FormClass>{
                 return <Col md={params.field.md || 4}>
                     <FormGroup controlId={params.field.key}>
                         {this.renderLabel(params.field)}
-                        <FormControl type="textarea" value={params?.data[params?.field?.key]}
+                        <FormControl type="textarea" value={params?.data}
                             onChange={(e: any) => { params.onChange(params.field.key, e.target.value) }} />
                     </FormGroup>
                     {/* {renderError(errors[field.key])} */}
@@ -81,7 +81,7 @@ export class Form extends React.Component<FormClass>{
                 return <Col md={params.field.md || 4}>
                     <FormGroup controlId={params.field.key}>
                         {this.renderLabel(params.field)}
-                        <FormControl type="text" value={params?.data[params?.field?.key]}
+                        <FormControl type="text" value={params?.data}
                             onChange={(e: any) => { params.onChange(params.field.key, e.target.value) }} />
                     </FormGroup>
                     {/* {renderError(errors[field.key])} */}
@@ -94,7 +94,7 @@ export class Form extends React.Component<FormClass>{
                 return <Col md={params.field.md || 4}>
                     <FormGroup controlId={params.field.key}>
                         {this.renderLabel(params.field)}
-                        <FormControl type="text" value={params?.data[params?.field?.key]}
+                        <FormControl type="text" value={params?.data}
                             onChange={(e: any) => { params.onChange(params.field.key, e.target.value) }} />
                     </FormGroup>
                     {/* {renderError(errors[field.key])} */}
