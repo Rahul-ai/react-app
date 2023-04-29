@@ -30,7 +30,7 @@ export const UserList = () => {
   return (
     <div className="container" style={{ marginTop: 100 }}>
       <h3>User Table</h3>
-      <RTable deleteUrl="user/softDelete" api="user/withPagination" tableStructure={tableStructure} />
+      <RTable Addlink="/UserForm" deleteUrl="user/softDelete" api="user/withPagination" tableStructure={tableStructure} />
       <h3>Role Table</h3>
       <RTable deleteUrl="role/softDelete" api="role/withPagination"  />
       <h3>Deleted Role Table</h3>
