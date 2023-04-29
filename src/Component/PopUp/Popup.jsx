@@ -1,9 +1,9 @@
 import React from 'react';
 import './Popup.css'
 
-const Popup = (props) =>{
-    return (props.trigger) ? (
-        <div className='popup'>
+export const Popup = (props) =>{
+    if(props.trigger){
+    return <div className='popup'>
             <div className={props.class ? `${props.class}`:'popup-inner'}>
             <div className='popup-header'>
                 {props.icon ? <img src={props.icon} alt="deleteicon" />:props?.heading}
@@ -24,7 +24,8 @@ const Popup = (props) =>{
                 </div>
             </div>
         </div>
-    ):"";
+    }
+        else{
+            return<></>;
+        }
 }
-
-export default Popup;
