@@ -5,5 +5,6 @@ export interface rTableInterface{
     api?:string
     tableStructure?:TableStructure[]
     data?:[]
+    config?:any
     deleteUrl:string
 } 

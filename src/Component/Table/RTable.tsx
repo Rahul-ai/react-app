@@ -5,6 +5,7 @@ import { Api } from "../../Helpers/axios/axios";
 import { TablePagination } from "../Pagination/TablePagination";
 import { rTableInterface } from "./rTableInterface";
 import { Popup } from "../PopUp/Popup";
+import {ExportToCsv} from 'export-to-csv';
 import "./RTable.css"
 
 export interface state {
@@ -114,6 +115,7 @@ export class RTable extends React.Component<rTableInterface> {
     return [...a, b];
   };
 
+
   NrenderBody = (data: any) => {
     return data.map((d: any) => {
       return <tr>{this.NrenderData(d)}</tr>;
@@ -134,6 +136,92 @@ export class RTable extends React.Component<rTableInterface> {
     );
     return [...a, b];
   };
+
+  export = () => {
+    return;
+    // let data = config || this.props.config
+
+    // if(data){
+    //     let columns = data.map(column => {
+    //         return column.name;
+    //     });
+
+    //     let rows = r || this.props.rows;
+
+    //     var today = new Date();
+    //     var date = today.getFullYear() + '_' + (today.getMonth() + 1) + '_' + today.getDate();
+    //     var time = today.getHours() + "_" + today.getMinutes() + "_" + today.getSeconds();
+    //     var dateTime = date + ' ' + time;
+    //     let filename = `export_${dateTime}.csv`;
+
+    //     rows = rows.map(row => {
+    //         return data.map((key, index) => {
+    //             return this.renderData(key,row)
+    //         });
+    //     });
+
+    //     const options = {
+    //         fieldSeparator: ',',
+    //         quoteStrings: '"',
+    //         decimalSeparator: '.',
+    //         showLabels: true,
+    //         showTitle: false,
+    //         filename: filename,
+    //         useTextFile: false,
+    //         useBom: true,
+    //         useKeysAsHeaders: false,
+    //         headers: columns,
+    //     };
+
+    //     const csvExporter = new ExportToCsv(options);
+
+    //     csvExporter.generateCsv(rows);
+        // return;
+        
+    // }
+    // else{
+    // let columns = Object.keys(this.props.rows[0]).map(column => {
+    //     return column;
+    // });
+    // let rows = (this.props.rows);
+    // // console.log(rows.length, "Rows to export");
+
+    // var today = new Date();
+    // var date = today.getFullYear() + '_' + (today.getMonth() + 1) + '_' + today.getDate();
+    // var time = today.getHours() + "_" + today.getMinutes() + "_" + today.getSeconds();
+    // var dateTime = date + ' ' + time;
+    // let filename = `export_${dateTime}.csv`;
+
+    // rows = rows.map(row => {
+    //     return Object.keys(row).map((key, index) => {
+    //         if (typeof row[key] == 'object' && row[key]) {
+    //             return row[key].username ? row[key].username : row[key].id;
+    //         } else {
+    //             return row[key];
+    //         }
+    //     });
+//     });
+
+
+//     const options = {
+//         fieldSeparator: ',',
+//         quoteStrings: '"',
+//         decimalSeparator: '.',
+//         showLabels: true,
+//         showTitle: false,
+//         filename: filename,
+//         useTextFile: false,
+//         useBom: true,
+//         useKeysAsHeaders: false,
+//         headers: columns
+//     };
+
+//     const csvExporter = new ExportToCsv(options);
+
+//     csvExporter.generateCsv(rows);
+//     return;
+// }
+};
 
   totalPages(): number {
     return Math.ceil(this.state.items[1] / this.limit);
