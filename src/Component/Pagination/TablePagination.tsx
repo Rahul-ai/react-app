@@ -1,5 +1,4 @@
 import { FormSelect, Pagination } from "react-bootstrap";
-import { Right } from "react-bootstrap/lib/Media";
 
 export const TablePagination = (props: any) => {
   return (
@@ -10,7 +9,7 @@ export const TablePagination = (props: any) => {
           <option value={20}>20</option>
           <option value={50}>50</option>
           <option value={100}>100</option>
-          {/* <option value={5}>5</option> */}
+          <option value={500}>500</option>
         </FormSelect>
     </div>
     <div style={{float:"left"}}>
