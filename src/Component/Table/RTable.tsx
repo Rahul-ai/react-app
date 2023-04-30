@@ -2,7 +2,7 @@ import React from "react";
 import { TabContainer, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Api } from "../../Helpers/axios/axios";
-import { TablePagination } from "../Pagination/TablePagination";
+import { TablePagination } from "./TablePagination";
 import { rTableInterface } from "./rTableInterface";
 import { Popup } from "../PopUp/Popup";
 import { ExportToCsv } from 'export-to-csv';
