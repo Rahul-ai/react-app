@@ -8,6 +8,7 @@ import { Popup } from "../PopUp/Popup";
 import { ExportToCsv } from 'export-to-csv';
 import "./RTable.css" 
 import { LoadingSpinner } from "../Spinner/LoadingSpinner";
+import { object } from "prop-types";
 
 export interface state {
   error: string | null
@@ -170,7 +171,14 @@ export class RTable extends React.Component<rTableInterface> {
 
   ErenderData = (data: any) => {
     let a = Object.keys(data).map((key: any) => {
+      
+      if(typeof data[key]=== "object"){
+        console.log(typeof data[key])
+        return JSON.stringify(data[key]);
+      }
+      else{
       return data[key];
+      }
     });
     return a;
   };
