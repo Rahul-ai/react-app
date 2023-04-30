@@ -15,7 +15,7 @@ export const TablePagination = (props: any) => {
     </div>
     <div style={{float:"left"}}>
         <Pagination key={"Pagination"}>
-          <Pagination.Prev />
+          {props.page!==1 && <Pagination.Prev onClick={()=>{props.onClickPrevious()}} />}
           {[...Array(props.totalPages)].map((d, index) => {
             return (
               <Pagination.Item
@@ -26,7 +26,7 @@ export const TablePagination = (props: any) => {
               </Pagination.Item>
             );
           })}
-          <Pagination.Next />
+          {props.page!==props.totalPages && <Pagination.Next onClick={()=>{props.onClickNext()}} />}
         </Pagination>
     </div>
      

@@ -85,6 +85,16 @@ export class RTable extends React.Component<rTableInterface> {
     this.fetch(true);
   };
 
+  onClickNext = (event: any) => {
+    this.page = this.page+1;
+    this.fetch(true);
+  };
+
+  onClickPrevious = (event: any) => {
+    this.page = this.page-1;
+    this.fetch(true);
+  };
+
   onSelectClick = (event: any) => {
     this.limit = event.target.value;
     this.page = 1;
@@ -107,19 +117,22 @@ export class RTable extends React.Component<rTableInterface> {
       return <td>{data[format.key]}</td>;
     });
 
-  NrenderHeading = (data: any) => {
+  NrenderHeading = (data: any, action: boolean = true) => {
     let a = Object.keys(data[0]).map((key: any) => {
       return <th>{key}</th>;
     });
     let b = <th>Action</th>;
-    return [...a, b];
+    if (action) {
+      return [...a, b];
+    }
+    return a;
   };
 
-
   NrenderBody = (data: any) => {
-    return data.map((d: any) => {
+    let a = data.map((d: any) => {
       return <tr>{this.NrenderData(d)}</tr>;
     });
+    return a;
   };
 
   NrenderData = (data: any) => {
@@ -137,46 +150,58 @@ export class RTable extends React.Component<rTableInterface> {
     return [...a, b];
   };
 
+  ErenderHeading = (data: any, action: boolean = true) => {
+    let a = Object.keys(data[0]).map((key: any) => {
+      return key;
+    });
+    return a;
+  };
+
+  ErenderBody = (data: any) => {
+    let a = data.map((d: any) => {
+      return this.ErenderData(d);
+    });
+    return a;
+  };
+
+  ErenderData = (data: any) => {
+    let a = Object.keys(data).map((key: any) => {
+      return data[key];
+    });
+    return a;
+  };
+
   export = () => {
+
+    let data = this.props.data || this.state.items[0];
+    let columns = this.props?.ExportStructure ?
+      this.renderHeading(this.props.ExportStructure) : this.ErenderHeading(data, false)
+
+    var today = new Date();
+    var date = today.getFullYear() + '_' + (today.getMonth() + 1) + '_' + today.getDate();
+    var time = today.getHours() + "_" + today.getMinutes() + "_" + today.getSeconds();
+    var dateTime = date + ' ' + time;
+    let filename = `export_${dateTime}.csv`;
+
+    var rows:any = this.ErenderBody(data);
+
+    const options = {
+      fieldSeparator: ',',
+      quoteStrings: '"',
+      decimalSeparator: '.',
+      showLabels: true,
+      showTitle: false,
+      filename: filename,
+      useTextFile: false,
+      useBom: true,
+      useKeysAsHeaders: false,
+      headers: columns,
+    };
+
+    const csvExporter = new ExportToCsv(options);
+
+    csvExporter.generateCsv(rows);
     return;
-    // let data = config || this.props.config
-
-    // if(data){
-    //     let columns = data.map(column => {
-    //         return column.name;
-    //     });
-
-    //     let rows = r || this.props.rows;
-
-    //     var today = new Date();
-    //     var date = today.getFullYear() + '_' + (today.getMonth() + 1) + '_' + today.getDate();
-    //     var time = today.getHours() + "_" + today.getMinutes() + "_" + today.getSeconds();
-    //     var dateTime = date + ' ' + time;
-    //     let filename = `export_${dateTime}.csv`;
-
-    //     rows = rows.map(row => {
-    //         return data.map((key, index) => {
-    //             return this.renderData(key,row)
-    //         });
-    //     });
-
-    //     const options = {
-    //         fieldSeparator: ',',
-    //         quoteStrings: '"',
-    //         decimalSeparator: '.',
-    //         showLabels: true,
-    //         showTitle: false,
-    //         filename: filename,
-    //         useTextFile: false,
-    //         useBom: true,
-    //         useKeysAsHeaders: false,
-    //         headers: columns,
-    //     };
-
-    //     const csvExporter = new ExportToCsv(options);
-
-    //     csvExporter.generateCsv(rows);
-    // return;
 
     // }
     // else{
@@ -245,7 +270,7 @@ export class RTable extends React.Component<rTableInterface> {
               Add New
             </Link>}
 
-            <button type="button" className="btn btn-outline-success Export" onClick={() => { this.triggerEvent(true) }} >
+            <button type="button" className="btn btn-outline-success Export" onClick={() => { this.export() }} >
               <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21"
                 viewBox="0 0 24 24" fill="#007745" stroke="white" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
@@ -284,6 +309,9 @@ export class RTable extends React.Component<rTableInterface> {
             onSelectClick={this.onSelectClick}
             onClick={this.onClick}
             totalPages={this.totalPages()}
+            page={this.page}
+            onClickNext={this.onClickNext}
+            onClickPrevious={this.onClickPrevious}
           />
         </TabContainer>
       );

@@ -8,4 +8,5 @@ export interface rTableInterface{
     config?:any
     deleteUrl:string
     Addlink?:any
+    ExportStructure?:[]
 } 
