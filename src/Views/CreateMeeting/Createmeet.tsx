@@ -25,7 +25,7 @@ const Createmeet = ({user}:any) => {
     
     useEffect(()=>{
         socket.on("joined-room",handelRoomJoined)
-    },[socket])
+    },[socket,handelRoomJoined])
 
     
 

@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { RTable } from "../../Component/Table/RTable";
 import { TableStructure } from "../../Component/Table/TableStructureInterface";
-import { useRef } from "react";
 
 export const UserList = () => {
   const tableStructure: TableStructure[] = [

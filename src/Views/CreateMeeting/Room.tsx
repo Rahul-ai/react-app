@@ -57,7 +57,7 @@ export const RoomPage =()=>{
 
     useEffect(()=>{
         getUserMediaStream();
-    },[]);
+    },[getUserMediaStream]);
 
 return (
     <div>
