@@ -121,8 +121,8 @@ export class RTable extends React.Component<rTableInterface> {
     let a = Object.keys(data[0]).map((key: any) => {
       return <th>{key}</th>;
     });
+    if(this.props.ActionEditLink || this.props.ActionDeleteLink){
     let b = <th>Action</th>;
-    if (action) {
       return [...a, b];
     }
     return a;
@@ -139,15 +139,18 @@ export class RTable extends React.Component<rTableInterface> {
     let a = Object.keys(data).map((key: any) => {
       return <td>{data[key]}</td>;
     });
+    if(this.props.ActionEditLink || this.props.ActionEditLink){
     let b = (
-      <tr>
+      <td>
         <Link to={`/UserForm/${data.id}`}><img width="16px" src="../../../images/edit.svg" alt="edit" /></Link>
         <Link to="#" onClick={() => { this.onDelete(data.id); }}>
           <img width="16px" src="../../../images/delete.svg" alt="delete" />
         </Link>
-      </tr>
+      </td>
     );
     return [...a, b];
+    }
+    return a;
   };
 
   ErenderHeading = (data: any, action: boolean = true) => {

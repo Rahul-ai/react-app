@@ -9,4 +9,6 @@ export interface rTableInterface{
     deleteUrl:string
     Addlink?:any
     ExportStructure?:[]
+    ActionEditLink?:string
+    ActionDeleteLink?:string
 } 
