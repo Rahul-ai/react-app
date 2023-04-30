@@ -260,7 +260,7 @@ export class RTable extends React.Component<rTableInterface> {
   };
 
   totalPages(): number {
-    if(this.limit === -1){
+    if(this.limit == -1){
       return 1;
     }
     return Math.ceil(this.state.items[1] / this.limit);
