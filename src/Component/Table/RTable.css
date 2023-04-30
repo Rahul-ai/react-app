@@ -6,3 +6,9 @@
 .Export{
   margin-right: 10px;
 }
+.record{
+  margin-right: 10px;
+  border-radius: 6px;
+  width: 145px;
+  margin-left: 5px;
+}
