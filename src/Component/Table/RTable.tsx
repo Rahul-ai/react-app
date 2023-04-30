@@ -8,7 +8,6 @@ import { Popup } from "../PopUp/Popup";
 import { ExportToCsv } from 'export-to-csv';
 import "./RTable.css" 
 import { LoadingSpinner } from "../Spinner/LoadingSpinner";
-import { object } from "prop-types";
 
 export interface state {
   error: string | null
