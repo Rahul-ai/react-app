@@ -7,6 +7,7 @@ import { rTableInterface } from "./rTableInterface";
 import { Popup } from "../PopUp/Popup";
 import { ExportToCsv } from 'export-to-csv';
 import "./RTable.css" 
+import { LoadingSpinner } from "../Spinner/LoadingSpinner";
 
 export interface state {
   error: string | null
@@ -252,7 +253,7 @@ export class RTable extends React.Component<rTableInterface> {
   };
 
   totalPages(): number {
-    if(this.limit == -1){
+    if(this.limit === -1){
       return 1;
     }
     return Math.ceil(this.state.items[1] / this.limit);
@@ -267,15 +268,11 @@ export class RTable extends React.Component<rTableInterface> {
       let params = this.props;
       let trig = this.state.trigger;
       let data = this.props.data || this.state.items[0];
+      let TotalRecord = this.state.items[1]
       return (
         <TabContainer key={"TabContainer"}>
           <div className="Buttons">
-              {/* <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21"
-                viewBox="0 0 24 24" fill="#007745" stroke="white" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round"> */}
-                {/* <path d="M21.2 15c.7-1.2 1-2.5.7-3.9-.6-2-2.4-3.5-4.4-3.5h-1.2c-.7-3-3.2-5.2-6.2-5.6-3-.3-5.9 1.3-7.3 4-1.2 2.5-1 6.5.5 8.8m8.7-1.6V21" /><path d="M16 16l-4-4-4 4" />*/}
-                {/* </svg>  */}
-                <div className="bg-success p-2 text-dark bg-opacity-25 record">Total Records: {this.state.items[1]}</div>
+            <div className="bg-success p-2 text-dark bg-opacity-25 record">Total Records: {this.state.items[1]}</div>
 
             {this.props.Addlink && <Link to={this.props.Addlink} type="button" className="btn btn-outline-primary Export" onClick={() => { this.triggerEvent(true) }} >
               <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
@@ -298,6 +295,7 @@ export class RTable extends React.Component<rTableInterface> {
               Search
             </button>
           </div>
+          
           <Popup trigger={trig} setSearch={this.triggerEvent} heading={<h4>Under Dev</h4>}>
             Under development
           </Popup>
@@ -323,7 +321,7 @@ export class RTable extends React.Component<rTableInterface> {
             onClick={this.onClick}
             totalPages={this.totalPages()}
             page={this.page}
-            TotalRecord = {this.state.items[1]}
+            TotalRecord = {TotalRecord}
             onClickNext={this.onClickNext}
             onClickPrevious={this.onClickPrevious}
           />
@@ -331,7 +329,7 @@ export class RTable extends React.Component<rTableInterface> {
       );
     }
     else {
-      return <TabContainer key={"TabContainer"}>
+      return this.state?.isLoaded===false ? <LoadingSpinner /> :<TabContainer key={"TabContainer"}>
         <Table key={"Table"} striped bordered hover>
           <thead>
             <tr>
