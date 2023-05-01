@@ -5,4 +5,5 @@ export interface formInterface{
     require?:boolean
     options?:string[]
     md?:number
+    placeHolder?:string
 }
