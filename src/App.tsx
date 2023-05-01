@@ -9,11 +9,12 @@ import { SocketProvider } from './Helpers/Socket/Socket';
 import { RoomPage } from './Views/CreateMeeting/Room';
 import { PeerProvider } from './Helpers/Peer/Peer';
 import { SecurityLog } from './Views/SecurityLog/SecurityLog';
+import { QueryGenerator } from './Component/Table/QueryGenerator';
 
 function App() {
   return (
-    <SocketProvider>
-    <PeerProvider>
+    // <SocketProvider>
+    // <PeerProvider>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<SignIn />}></Route>
@@ -23,11 +24,12 @@ function App() {
         <Route path="/UserForm" element={<UserForm />} />
         <Route path="/UserForm/:id" element={<UserForm />} />
         <Route path="/joinedroom/:id" element={<RoomPage/>} />
+        <Route path="/QG" element={<QueryGenerator/>} />
         <Route path="*" element={<h1>No Page Found</h1>} />
       </Routes>
     </BrowserRouter>
-    </PeerProvider>
-    </SocketProvider>
+    // </PeerProvider>
+    // </SocketProvider>
   );
 }
 

@@ -8,6 +8,7 @@ import { Popup } from "../PopUp/Popup";
 import { ExportToCsv } from 'export-to-csv';
 import "./RTable.css" 
 import { LoadingSpinner } from "../Spinner/LoadingSpinner";
+import { QueryGenerator } from "./QueryGenerator";
 
 export interface state {
   error: string | null
@@ -26,10 +27,11 @@ export class RTable extends React.Component<rTableInterface> {
 
   private page = 1;
   private limit = 10;
+  private where:any ={};
 
   fetch = async (Update = false) => {
     if (Update) {
-      Api.post(this.props.api, { page: this.page, limit: this.limit })
+      Api.post(this.props.api, { where:this.where,page: this.page, limit: this.limit })
         .then((result: any) => {
           this.setState({
             isLoaded: false,
@@ -270,6 +272,15 @@ export class RTable extends React.Component<rTableInterface> {
     this.setState({ trigger: action });
   }
 
+  queryChange = (key: string, value:any) =>{
+     console.log({key,value});
+     if(key != 'selector'){
+        this.where[key] = value;
+        this.page = 1;
+        this.fetch(true);
+     }
+  }
+
   render() {
     if (this.state?.items[0].length !== 0) {
       let params = this.props;
@@ -295,16 +306,16 @@ export class RTable extends React.Component<rTableInterface> {
               Export
             </button>
 
-            <button type="button" className="btn btn-outline-secondary searchButton" onClick={() => { this.triggerEvent(true) }} >
+            {this.props.searchReg && <button type="button" className="btn btn-outline-secondary searchButton" onClick={() => { this.triggerEvent(true) }} >
               <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
                 <path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"> </path>
               </svg>
               Search
-            </button>
+            </button>}
           </div>
           
           <Popup trigger={trig} setSearch={this.triggerEvent} heading={<h4>Under Dev</h4>}>
-            Under development
+            <QueryGenerator qChange={this.queryChange} queryRef={this.props.searchReg} />
           </Popup>
 
           <Table key={"Table"} striped bordered hover>

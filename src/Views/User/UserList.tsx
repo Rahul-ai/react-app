@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { RTable } from "../../Component/Table/RTable";
 import { TableStructure } from "../../Component/Table/TableStructureInterface";
+import { formInterface } from "../../Component/GenericForm/formInterface";
 
 export const UserList = () => {
   const tableStructure: TableStructure[] = [
@@ -25,11 +26,16 @@ export const UserList = () => {
     },},
   ];
 
+  const SearchInter:formInterface[] = [
+    // {name:"selector",type:'select',key:'selector',options:["name"]},
+    {name:"Name",type:'text',key:'firstName'},
+  ]
+
   
   return (
     <div className="container" style={{ marginTop: 100 }}>
       <h3>User Table</h3>
-      <RTable Addlink="/UserForm" deleteUrl="user/softDelete" api="user/withPagination" tableStructure={tableStructure} />
+      <RTable searchReg={SearchInter} Addlink="/UserForm" deleteUrl="user/softDelete" api="user/withPagination" tableStructure={tableStructure} />
       <h3>Role Table</h3>
       <RTable deleteUrl="role/softDelete" api="role/withPagination"  />
       <h3>Deleted Role Table</h3>

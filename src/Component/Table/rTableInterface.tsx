@@ -1,3 +1,4 @@
+import { formInterface } from "../GenericForm/formInterface"
 import { TableStructure } from "./TableStructureInterface"
 
 export interface rTableInterface{
@@ -11,4 +12,5 @@ export interface rTableInterface{
     ExportStructure?:[]
     ActionEditLink?:string
     ActionDeleteLink?:string
+    searchReg?:formInterface[]
 } 

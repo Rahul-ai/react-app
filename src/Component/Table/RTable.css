@@ -1,7 +1,7 @@
 .Buttons{
   display: flex;
   justify-content: flex-end;
-  padding: 5px;
+  padding-bottom: 8px;
 }
 .Export{
   margin-right: 10px;
