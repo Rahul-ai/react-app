@@ -37,6 +37,7 @@ export const Api = {
         }
         catch (error) {
             console.log(error);
+            return error;
         }
     },
 
@@ -47,6 +48,7 @@ export const Api = {
             throw errors(d.status);
         }
         catch (error) {
+            console.log(error);
             return error;
         }
     },
@@ -59,6 +61,7 @@ export const Api = {
         }
         catch (error) {
             console.log(error);
+            return error;
         }
     },
 
@@ -73,6 +76,7 @@ export const Api = {
         }
         catch (error) {
             console.log(error);
+            return error;
         }
     },
 
@@ -84,6 +88,7 @@ export const Api = {
         }
         catch (error) {
             console.log(error);
+            return error;
         }
     },
 
@@ -94,6 +99,7 @@ export const Api = {
             throw errors(d.status);
         }
         catch (error) {
+            console.log(error);
             return error;
         }
     }
