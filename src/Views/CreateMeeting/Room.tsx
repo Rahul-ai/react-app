@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react"
-import { useSocket } from "../../Helpers/Socket/Socket"
-import { usePeer } from "../../Helpers/Peer/Peer";
+import { useSocket } from "../../customHook/Socket/Socket"
+import { usePeer } from "../../customHook/Peer/Peer";
 import ReactPlayer from "react-player";
 
 export const RoomPage =()=>{

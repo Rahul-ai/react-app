@@ -5,9 +5,9 @@ import { SignIn } from './Views/LogIn/LogIn';
 import { UserList } from './Views/User/UserList';
 import { UserForm } from './Views/User/UserForm';
 import { CreatM } from './Views/CreateMeeting/Createmeet';
-import { SocketProvider } from './Helpers/Socket/Socket';
+import { SocketProvider } from './customHook/Socket/Socket';
 import { RoomPage } from './Views/CreateMeeting/Room';
-import { PeerProvider } from './Helpers/Peer/Peer';
+import { PeerProvider } from './customHook/Peer/Peer';
 import { SecurityLog } from './Views/SecurityLog/SecurityLog';
 import { QueryGenerator } from './Component/Table/QueryGenerator';
 

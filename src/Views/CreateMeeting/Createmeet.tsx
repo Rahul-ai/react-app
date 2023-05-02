@@ -4,7 +4,7 @@ import { RenderComponent } from "../../Component/RenderComponent/RenderComponent
 import { GenericForm } from "../../Component/GenericForm/GenericForm";
 import { formInterface } from "../../Component/GenericForm/formInterface";
 import { useNavigate } from "react-router-dom";
-import { useSocket } from "../../Helpers/Socket/Socket";
+import { useSocket } from "../../customHook/Socket/Socket";
 
 const Createmeet = ({user}:any) => {
     const navigate = useNavigate();
