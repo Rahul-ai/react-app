@@ -26,9 +26,11 @@ const LogIn = ({user}:any) => {
 
     const Submit = async (e: React.FormEvent<HTMLInputElement> | any) => {
         e.preventDefault();
-        let user = await Api.logIn(data);
-        store.dispatch(UserDetails(user));
-        navigate("/rahul")
+        Api.logIn(data).then((res)=>{
+            store.dispatch(UserDetails(res));  
+            console.log(store.getState());
+             navigate("/UserList")
+        });       
     };
 
     const onChange = (key: string, value: any) => {
