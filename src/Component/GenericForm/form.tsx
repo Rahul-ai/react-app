@@ -108,9 +108,7 @@ export class Form extends React.Component<FormClass>{
                     {/* {renderError(errors[field.key])} */}
                 </Col>
         }
-        if(params.field.condition)
-        console.log(params?.condition);
-
+        
         if(params.field.condition && params?.field.key !== params.condition) {
             formdata = <FormControl type="hidden" hidden
                 onChange={event => params.onChange(params.field.key, event.target.value)}
