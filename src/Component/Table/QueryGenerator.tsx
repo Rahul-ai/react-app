@@ -4,9 +4,8 @@ import { GenericForm } from "../../Component/GenericForm/GenericForm";
 export const QueryGenerator = (props:any) =>{
     const config = props.queryRef;
     const data:any = props.data;
-    console.log(data);
     return <Container>
-      <Row style={{ width:500,height:50}}>
+      <Row>
         {GenericForm(config, props.qChange, data)}
         <Col md={12}>
         </Col>
