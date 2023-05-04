@@ -8,6 +8,7 @@ interface FormClass {
     field: formInterface,
     onChange: React.ChangeEvent<HTMLFormElement> | any,
     data:any
+    condition?:any
 };
 
 export class Form extends React.Component<FormClass>{
@@ -20,9 +21,10 @@ export class Form extends React.Component<FormClass>{
 
     render() {
         let params = this.props;
+        var formdata:any;
         switch (this.props.field.type) {
             case "password":
-                return <Col md={params.field.md || 4}>
+                formdata = <Col md={params.field.md || 4}>
                     <FormGroup controlId={params.field.key}>
                         {this.renderLabel(params.field)}
                         <FormControl type="password" 
@@ -30,19 +32,21 @@ export class Form extends React.Component<FormClass>{
                     </FormGroup>
                     {/* {renderError(errors[field.key])} */}
                 </Col>
+                break;
 
             case "number":
-                return <Col md={params.field.md || 4}>
+                formdata =  <Col md={params.field.md || 4}>
                     <FormGroup controlId={params.field.key}>
                         {this.renderLabel(params.field)}
                         <FormControl type="number" value={params?.data}
                             onChange={(e: any) => {params.onChange(params.field.key, e.target.value) }} />
                     </FormGroup>
                     {/* {renderError(errors[field.key])} */}
-                </Col>   
+                </Col>  
+                break; 
                 
                 case "select":
-                    return <Col md={params.field.md || 4}>
+                    formdata =  <Col md={params.field.md || 4}>
                         <FormGroup controlId={params.field.key}>
                             {this.renderLabel(params.field)}
                             <FormSelect value={params?.data}
@@ -54,10 +58,11 @@ export class Form extends React.Component<FormClass>{
                             </FormSelect>
                         </FormGroup>
                         {/* {renderError(errors[field.key])} */}
-                    </Col>              
+                    </Col>             
+                    break; 
             
             case "email":
-                return <Col md={params.field.md || 4}>
+                formdata =  <Col md={params.field.md || 4}>
                     <FormGroup controlId={params.field.key}>
                         {this.renderLabel(params.field)}
                         <FormControl type="email" value={params?.data}
@@ -65,10 +70,10 @@ export class Form extends React.Component<FormClass>{
                     </FormGroup>
                     {/* {renderError(errors[field.key])} */}
                 </Col>
-
+                break;
 
             case "textarea":
-                return <Col md={params.field.md || 4}>
+                formdata =  <Col md={params.field.md || 4}>
                     <FormGroup controlId={params.field.key}>
                         {this.renderLabel(params.field)}
                         <FormControl type="textarea" value={params?.data}
@@ -76,9 +81,10 @@ export class Form extends React.Component<FormClass>{
                     </FormGroup>
                     {/* {renderError(errors[field.key])} */}
                 </Col>
+                break;
 
             case "text":
-                return <Col md={params.field.md || 4}>
+                formdata =  <Col md={params.field.md || 4}>
                     <FormGroup controlId={params.field.key}>
                         {this.renderLabel(params.field)}
                         <FormControl type="text" value={params?.data}
@@ -86,12 +92,14 @@ export class Form extends React.Component<FormClass>{
                     </FormGroup>
                     {/* {renderError(errors[field.key])} */}
                 </Col>
+                break;
 
             case "fileUpload":
-                return <FileUpload value={params?.data[params?.field?.key]} />
+                formdata =  <FileUpload value={params?.data[params?.field?.key]} />
+                break;
 
             default:
-                return <Col md={params.field.md || 4}>
+                formdata =  <Col md={params.field.md || 4}>
                     <FormGroup controlId={params.field.key}>
                         {this.renderLabel(params.field)}
                         <FormControl type="text" value={params?.data}
@@ -100,5 +108,14 @@ export class Form extends React.Component<FormClass>{
                     {/* {renderError(errors[field.key])} */}
                 </Col>
         }
+        if(params.field.condition)
+        console.log(params?.condition);
+
+        if(params.field.condition && params?.field.key !== params.condition) {
+            formdata = <FormControl type="hidden" hidden
+                onChange={event => params.onChange(params.field.key, event.target.value)}
+                placeholder="" />
+        }
+        return formdata;
     }
 };

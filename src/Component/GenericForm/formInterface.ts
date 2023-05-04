@@ -6,4 +6,6 @@ export interface formInterface{
     options?:string[]
     md?:number
     placeHolder?:string
+    validation?:any
+    condition?:any
 }
