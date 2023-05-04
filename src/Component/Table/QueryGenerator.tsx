@@ -3,7 +3,8 @@ import { GenericForm } from "../../Component/GenericForm/GenericForm";
 
 export const QueryGenerator = (props:any) =>{
     const config = props.queryRef;
-    const data:any = [];
+    const data:any = props.data;
+    console.log(data);
     return <Container>
       <Row style={{ width:500,height:50}}>
         {GenericForm(config, props.qChange, data)}

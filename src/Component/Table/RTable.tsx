@@ -15,6 +15,7 @@ export interface state {
   isLoaded: boolean
   items: [[], number]
   trigger: boolean
+  data:any
 }
 
 export class RTable extends React.Component<rTableInterface> {
@@ -23,11 +24,13 @@ export class RTable extends React.Component<rTableInterface> {
     isLoaded: false,
     items: [[], 1],
     trigger: false,
+    data:{}
   };
 
   private page = 1;
   private limit = 10;
   private where:any ={};
+  private data:any = {};
 
   fetch = async (Update = false) => {
     if (Update) {
@@ -274,6 +277,11 @@ export class RTable extends React.Component<rTableInterface> {
 
   queryChange = (key: string, value:any) =>{
      console.log({key,value});
+     let d = {...this.state.data}
+     d[key] = value;
+     let state = this.state;
+     state.data = d;
+     this.setState(state); 
      if(key != 'selector'){
         this.where[key] = value;
         this.page = 1;
@@ -315,7 +323,7 @@ export class RTable extends React.Component<rTableInterface> {
           </div>
           
           <Popup trigger={trig} setSearch={this.triggerEvent} heading={<h4>Searching Under Dev</h4>}>
-            <QueryGenerator qChange={this.queryChange} queryRef={this.props.searchReg} />
+            <QueryGenerator data={this.state.data} qChange={this.queryChange} queryRef={this.props.searchReg} />
           </Popup>
 
           <Table key={"Table"} striped bordered hover>
