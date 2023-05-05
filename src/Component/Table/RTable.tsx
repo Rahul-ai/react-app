@@ -30,8 +30,7 @@ export class RTable extends React.Component<rTableInterface> {
   private page = 1;
   private limit = 10;
   private where:any ={};
-  private data:any = {};
-
+  
   fetch = async (Update = false) => {
     if (Update) {
       Api.post(this.props.api, { where:this.where,page: this.page, limit: this.limit })
@@ -276,7 +275,6 @@ export class RTable extends React.Component<rTableInterface> {
   }
 
   queryChange = (key: string, value:any) =>{
-    //  console.log({key,value});
      let d = {...this.state.data}
      d[key] = value;
      let state = this.state;
