@@ -59,7 +59,7 @@ export class RTable extends React.Component<rTableInterface> {
       this.fetch()
         .then((result: any) => {
           this.setState({
-            isLoaded: false,
+            isLoaded: true,
             items: result || [],
           });
         })
