@@ -12,7 +12,7 @@ export const UserList = () => {
     },
     {
       name: "Name",render: (data: any, index: any) => {
-        return `${data.firstName} ${data.lastName}`; },
+        return `${data.firstName}`; },
     },
     { name: "UpdatedAt", key: "updatedAt" },
     { name: "CreatedAt", key: "createdAt" },
