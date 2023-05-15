@@ -28,7 +28,7 @@ export const UserList = () => {
 
   const SearchInter:formInterface[] = [
     {name:"Search by",type:'select',key:'selector',options:["firstName"],md:12},
-    {name:"Name",type:'text',key:'firstName',condition:'selector',md:12},
+    {name:"Name",type:'text',key:'name',condition:'selector',md:12},
   ]
 
   
