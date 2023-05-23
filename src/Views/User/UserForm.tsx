@@ -12,10 +12,7 @@ export const UserForm = () => {
 
   //Form Data
   const config: formInterface[] = [
-    { type: "text", name: "First Name", key: "firstName", require: true, md:12 },
-    { type: "text", name: "Last Name", key: "lastName", require: true, md:12 },
-    // { type: "select", name: "User Name", key: "user", options:["sda","adsad"] , require: true },
-    // { type: "password", name: "Password", require: true, key: "password" },
+    { type: "text", name: "Full Name", key: "name", require: true, md:12 },
   ];
 
   const [data, setData] = useState<any>();
@@ -44,7 +41,6 @@ export const UserForm = () => {
     else{
       Create();
     }
-   
   };
 
   const Update = () =>{
@@ -66,8 +62,8 @@ export const UserForm = () => {
         .catch((e) => {
           console.log(e);
         }).finally(()=>{
-          navigate(`/UserForm`);
-        }); ;
+          navigate(`/userlist`);
+        });
   }
 
   const onChange = (key: string, value: any) => {
