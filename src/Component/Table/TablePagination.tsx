@@ -20,7 +20,7 @@ export const TablePagination = (props: any) => {
           {props.page!==1 && <Pagination.Prev onClick={()=>{props.onClickPrevious()}} />}
           {[...Array(props.totalPages)].map((d, index) => {
             return (
-              <Pagination.Item
+              <Pagination.Item active={index+1 === props.page}
                 key={index + 1}
                 onClick={(e) => props.onClick(e)}
               >
