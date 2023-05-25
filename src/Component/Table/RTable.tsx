@@ -174,14 +174,10 @@ export class RTable extends React.Component<rTableInterface> {
 
   ErenderData = (data: any) => {
     let a = Object.keys(data).map((key: any) => {
-      
       if(typeof data[key]=== "object"){
-        console.log(typeof data[key])
         return JSON.stringify(data[key]);
       }
-      else{
       return data[key];
-      }
     });
     return a;
   };
@@ -217,50 +213,6 @@ export class RTable extends React.Component<rTableInterface> {
 
     csvExporter.generateCsv(rows);
     return;
-
-    // }
-    // else{
-    // let columns = Object.keys(this.props.rows[0]).map(column => {
-    //     return column;
-    // });
-    // let rows = (this.props.rows);
-    // // console.log(rows.length, "Rows to export");
-
-    // var today = new Date();
-    // var date = today.getFullYear() + '_' + (today.getMonth() + 1) + '_' + today.getDate();
-    // var time = today.getHours() + "_" + today.getMinutes() + "_" + today.getSeconds();
-    // var dateTime = date + ' ' + time;
-    // let filename = `export_${dateTime}.csv`;
-
-    // rows = rows.map(row => {
-    //     return Object.keys(row).map((key, index) => {
-    //         if (typeof row[key] == 'object' && row[key]) {
-    //             return row[key].username ? row[key].username : row[key].id;
-    //         } else {
-    //             return row[key];
-    //         }
-    //     });
-    //     });
-
-
-    //     const options = {
-    //         fieldSeparator: ',',
-    //         quoteStrings: '"',
-    //         decimalSeparator: '.',
-    //         showLabels: true,
-    //         showTitle: false,
-    //         filename: filename,
-    //         useTextFile: false,
-    //         useBom: true,
-    //         useKeysAsHeaders: false,
-    //         headers: columns
-    //     };
-
-    //     const csvExporter = new ExportToCsv(options);
-
-    //     csvExporter.generateCsv(rows);
-    //     return;
-    // }
   };
 
   totalPages(): number {

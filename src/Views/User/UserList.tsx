@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { RTable } from "../../Component/Table/RTable";
 import { TableStructure } from "../../Component/Table/TableStructureInterface";
 import { formInterface } from "../../Component/GenericForm/formInterface";
+import { CardGrid } from "../../Component/CardGrid/CardGrid";
 
 export const UserList = () => {
   const tableStructure: TableStructure[] = [
@@ -40,6 +41,8 @@ export const UserList = () => {
       <RTable deleteUrl="role/softDelete" api="role/withPagination"  />
       <h3>Deleted Role Table</h3>
       <RTable deleteUrl="role/restore" api="role/onlyDeleted" />
+
+      <CardGrid />
     </div>
   );
 };
