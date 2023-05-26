@@ -11,7 +11,9 @@ import { TablePagination } from "../Table/TablePagination";
 import { useEffect, useState } from "react";
 import { Api } from "../../Helpers/axios/axios";
 
-export const CardGrid: any = () => {
+
+
+export const CardGrid = ({api}:any) => {
   const [data, setData] = useState([]);
   const [count, setCount]= useState<number>();
   const [limit, setLimit] = useState(10);
@@ -28,7 +30,7 @@ export const CardGrid: any = () => {
   ];
 
   const featch = () => {
-    Api.post("role/withPagination", { page: 1, limit: limit })
+    Api.post(api, { page: 1, limit: limit })
       .then((res: any) => {
         if (res[0] && res[1]){
           setData(res[0]);
