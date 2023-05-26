@@ -15,7 +15,7 @@ import { ExportToCsv } from "export-to-csv";
 export const CardGrid = (props: any) => {
   const [data, setData] = useState([]);
   const [count, setCount] = useState<number>(1);
-  const [limit, setLimit] = useState(2);
+  const [limit, setLimit] = useState(10);
   const [pageSize, setPageSize] = useState<number>(1);
   const [currentPage, setCurrentPage] = useState<number>(1);
 
