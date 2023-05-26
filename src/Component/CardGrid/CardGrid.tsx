@@ -169,7 +169,7 @@ export const CardGrid = (props: any) => {
     let a = Object.keys(data).map((key: any) => {
       return (
         <ListGroupItem>
-          {key}:{data[key]}
+          {key} : {data[key]}
         </ListGroupItem>
       );
     });
