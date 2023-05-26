@@ -43,9 +43,9 @@ export const CardGrid: any = () => {
 
   const totalPage=()=>{
     if(count && count != -1){
-      return Math.ceil(count / 10);
+      setPageSize(Math.ceil(count / 10));
     }
-      return 1;
+      setPageSize(1);
   }
 
   useEffect(() => {
