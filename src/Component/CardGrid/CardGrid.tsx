@@ -15,9 +15,10 @@ import { Api } from "../../Helpers/axios/axios";
 
 export const CardGrid = ({api}:any) => {
   const [data, setData] = useState([]);
-  const [count, setCount]= useState<number>();
+  const [count, setCount]= useState<number>(0);
   const [limit, setLimit] = useState(10);
   const [pageSize,setPageSize] = useState<number>(1);
+  const [currentPage,setCurrentPage] = useState<number>(1);
 
   let variant = [
     "Primary",
@@ -29,8 +30,8 @@ export const CardGrid = ({api}:any) => {
     "Dark",
   ];
 
-  const featch = () => {
-    Api.post(api, { page: 1, limit: limit })
+  const fetch = () => {
+    Api.post(api, { page: currentPage, limit: limit })
       .then((res: any) => {
         if (res[0] && res[1]){
           setData(res[0]);
@@ -43,16 +44,33 @@ export const CardGrid = ({api}:any) => {
       .finally(() => {});
   };
 
-  const totalPage=()=>{
-    if(count && count != -1){
-      setPageSize(Math.ceil(count / 10));
-    }
-      setPageSize(1);
-  }
+  useEffect(() => {
+    fetch();
+  }, []);
 
   useEffect(() => {
-    featch();
-  }, []);
+    fetch();
+  }, [limit]);
+
+  useEffect(() => {
+    fetch();
+  }, [currentPage]);
+
+  const onClickNext = (event: any) => {
+     setCurrentPage(currentPage+1);
+    fetch();
+  };
+
+  const onClickPrevious = (event: any) => {
+    setCurrentPage(currentPage-1);
+    fetch();
+  };
+
+  const totalPage=()=>{
+    if(count != -1){
+      setPageSize(Math.ceil(count / 10));
+    }
+  }
 
   const getRandomArbitrary = (min: number, max: number) => {
     return Math.ceil(Math.random() * (max - min) + min);
@@ -101,10 +119,10 @@ export const CardGrid = ({api}:any) => {
         // onSelectClick={onSelectClick}
         // onClick={this.onClick}
         totalPages={pageSize}
-        // page={this.page}
-        TotalRecord = {count}
-        // onClickNext={this.onClickNext}
-        // onClickPrevious={this.onClickPrevious}
+        page={currentPage}
+        TotalRecord={count}
+        onClickNext={onClickNext}
+        onClickPrevious={onClickPrevious}
       />
     </div>
   );
