@@ -5,17 +5,17 @@ import { Api } from "../../Helpers/axios/axios";
 import { TablePagination } from "./TablePagination";
 import { rTableInterface } from "./rTableInterface";
 import { Popup } from "../PopUp/Popup";
-import { ExportToCsv } from 'export-to-csv';
-import "./RTable.css" 
+import { ExportToCsv } from "export-to-csv";
+import "./RTable.css";
 import { LoadingSpinner } from "../Spinner/LoadingSpinner";
 import { QueryGenerator } from "./QueryGenerator";
 
 export interface state {
-  error: string | null
-  isLoaded: boolean
-  items: [[], number]
-  trigger: boolean
-  data:any
+  error: string | null;
+  isLoaded: boolean;
+  items: [[], number];
+  trigger: boolean;
+  data: any;
 }
 
 export class RTable extends React.Component<rTableInterface> {
@@ -24,16 +24,20 @@ export class RTable extends React.Component<rTableInterface> {
     isLoaded: false,
     items: [[], 1],
     trigger: false,
-    data:{}
+    data: {},
   };
 
   private page = 1;
   private limit = 10;
-  private where:any ={};
-  
+  private where: any = {};
+
   fetch = async (Update = false) => {
     if (Update) {
-      Api.post(this.props.api, { where:this.where,page: this.page, limit: this.limit })
+      Api.post(this.props.api, {
+        where: this.where,
+        page: this.page,
+        limit: this.limit,
+      })
         .then((result: any) => {
           this.setState({
             isLoaded: true,
@@ -51,7 +55,7 @@ export class RTable extends React.Component<rTableInterface> {
   };
 
   SrNo(index: number): number {
-    return (this.page - 1) * 10 + index;
+    return (this.page - 1) * this.limit + index;
   }
 
   componentDidMount(): void {
@@ -86,17 +90,19 @@ export class RTable extends React.Component<rTableInterface> {
   };
 
   onClick = (event: any) => {
-    this.page = parseInt(event.target.text);
-    this.fetch(true);
+    if (event.target.text && event.target.text != "") {
+      this.page = parseInt(event.target.text);
+      this.fetch(true);
+    }
   };
 
   onClickNext = (event: any) => {
-    this.page = this.page+1;
+    this.page = this.page + 1;
     this.fetch(true);
   };
 
   onClickPrevious = (event: any) => {
-    this.page = this.page-1;
+    this.page = this.page - 1;
     this.fetch(true);
   };
 
@@ -126,8 +132,8 @@ export class RTable extends React.Component<rTableInterface> {
     let a = Object.keys(data[0]).map((key: any) => {
       return <th>{key}</th>;
     });
-    if(this.props.ActionEditLink || this.props.ActionDeleteLink){
-    let b = <th>Action</th>;
+    if (this.props.ActionEditLink || this.props.ActionDeleteLink) {
+      let b = <th>Action</th>;
       return [...a, b];
     }
     return a;
@@ -144,16 +150,23 @@ export class RTable extends React.Component<rTableInterface> {
     let a = Object.keys(data).map((key: any) => {
       return <td>{data[key]}</td>;
     });
-    if(this.props.ActionEditLink || this.props.ActionEditLink){
-    let b = (
-      <td>
-        <Link to={`/UserForm/${data.id}`}><img width="16px" src="../../../images/edit.svg" alt="edit" /></Link>
-        <Link to="#" onClick={() => { this.onDelete(data.id); }}>
-          <img width="16px" src="../../../images/delete.svg" alt="delete" />
-        </Link>
-      </td>
-    );
-    return [...a, b];
+    if (this.props.ActionEditLink || this.props.ActionEditLink) {
+      let b = (
+        <td>
+          <Link to={`/UserForm/${data.id}`}>
+            <img width="16px" src="../../../images/edit.svg" alt="edit" />
+          </Link>
+          <Link
+            to="#"
+            onClick={() => {
+              this.onDelete(data.id);
+            }}
+          >
+            <img width="16px" src="../../../images/delete.svg" alt="delete" />
+          </Link>
+        </td>
+      );
+      return [...a, b];
     }
     return a;
   };
@@ -174,7 +187,7 @@ export class RTable extends React.Component<rTableInterface> {
 
   ErenderData = (data: any) => {
     let a = Object.keys(data).map((key: any) => {
-      if(typeof data[key]=== "object"){
+      if (typeof data[key] === "object") {
         return JSON.stringify(data[key]);
       }
       return data[key];
@@ -183,23 +196,29 @@ export class RTable extends React.Component<rTableInterface> {
   };
 
   export = () => {
-
     let data = this.props.data || this.state.items[0];
-    let columns = this.props?.ExportStructure ?
-      this.renderHeading(this.props.ExportStructure) : this.ErenderHeading(data, false)
+    let columns = this.props?.ExportStructure
+      ? this.renderHeading(this.props.ExportStructure)
+      : this.ErenderHeading(data, false);
 
     var today = new Date();
-    var date = today.getFullYear() + '_' + (today.getMonth() + 1) + '_' + today.getDate();
-    var time = today.getHours() + "_" + today.getMinutes() + "_" + today.getSeconds();
-    var dateTime = date + ' ' + time;
+    var date =
+      today.getFullYear() +
+      "_" +
+      (today.getMonth() + 1) +
+      "_" +
+      today.getDate();
+    var time =
+      today.getHours() + "_" + today.getMinutes() + "_" + today.getSeconds();
+    var dateTime = date + " " + time;
     let filename = `export_${dateTime}.csv`;
 
-    var rows:any = this.ErenderBody(data);
+    var rows: any = this.ErenderBody(data);
 
     const options = {
-      fieldSeparator: ',',
+      fieldSeparator: ",",
       quoteStrings: '"',
-      decimalSeparator: '.',
+      decimalSeparator: ".",
       showLabels: true,
       showTitle: false,
       filename: filename,
@@ -216,7 +235,7 @@ export class RTable extends React.Component<rTableInterface> {
   };
 
   totalPages(): number {
-    if(this.limit == -1){
+    if (this.limit == -1) {
       return 1;
     }
     return Math.ceil(this.state.items[1] / this.limit);
@@ -224,58 +243,123 @@ export class RTable extends React.Component<rTableInterface> {
 
   triggerEvent = (action: boolean) => {
     this.setState({ trigger: action });
-  }
+  };
 
-  queryChange = (key: string, value:any) =>{
-     let d = {...this.state.data}
-     d[key] = value;
-     let state = this.state;
-     state.data = d;
-     this.setState(state); 
-     if(key != 'selector'){
-        this.where[key] = value;
-        this.page = 1;
-        this.fetch(true);
-     }
-  }
+  queryChange = (key: string, value: any) => {
+    let d = { ...this.state.data };
+    d[key] = value;
+    let state = this.state;
+    state.data = d;
+    this.setState(state);
+    if (key != "selector") {
+      this.where[key] = value;
+      this.page = 1;
+      this.fetch(true);
+    }
+  };
 
   render() {
     if (this.state?.items[0].length !== 0) {
       let params = this.props;
       let trig = this.state.trigger;
       let data = this.props.data || this.state.items[0];
-      let TotalRecord = this.state.items[1]
+      let TotalRecord = this.state.items[1];
       return (
         <TabContainer key={"TabContainer"}>
           <div className="Buttons">
-            <div className="bg-success p-2 text-dark bg-opacity-25 record">Total Records: {this.state.items[1]}</div>
+            <div className="bg-success p-2 text-dark bg-opacity-25 record">
+              Total Records: {this.state.items[1]}
+            </div>
 
-            {this.props.Addlink && <Link to={this.props.Addlink} type="button" className="btn btn-outline-primary Export" onClick={() => { this.triggerEvent(true) }} >
-              <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 448 512" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path></svg>
-              Add New
-            </Link>}
+            {this.props.Addlink && (
+              <Link
+                to={this.props.Addlink}
+                type="button"
+                className="btn btn-outline-primary Export"
+                onClick={() => {
+                  this.triggerEvent(true);
+                }}
+              >
+                <svg
+                  stroke="currentColor"
+                  fill="currentColor"
+                  strokeWidth="0"
+                  viewBox="0 0 448 512"
+                  aria-hidden="true"
+                  focusable="false"
+                  height="1em"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path>
+                </svg>
+                Add New
+              </Link>
+            )}
 
-            <button type="button" className="btn btn-outline-success Export" onClick={() => { this.export() }} >
-              <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21"
-                viewBox="0 0 24 24" fill="#007745" stroke="white" strokeWidth="2"
-                strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21.2 15c.7-1.2 1-2.5.7-3.9-.6-2-2.4-3.5-4.4-3.5h-1.2c-.7-3-3.2-5.2-6.2-5.6-3-.3-5.9 1.3-7.3 4-1.2 2.5-1 6.5.5 8.8m8.7-1.6V21" /><path d="M16 16l-4-4-4 4" /></svg>
+            <button
+              type="button"
+              className="btn btn-outline-success Export"
+              onClick={() => {
+                this.export();
+              }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="21"
+                height="21"
+                viewBox="0 0 24 24"
+                fill="#007745"
+                stroke="white"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M21.2 15c.7-1.2 1-2.5.7-3.9-.6-2-2.4-3.5-4.4-3.5h-1.2c-.7-3-3.2-5.2-6.2-5.6-3-.3-5.9 1.3-7.3 4-1.2 2.5-1 6.5.5 8.8m8.7-1.6V21" />
+                <path d="M16 16l-4-4-4 4" />
+              </svg>
               Export
             </button>
 
-            {this.props.searchReg && <button type="button" className="btn btn-outline-secondary searchButton" onClick={() => { this.triggerEvent(true) }} >
-              <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 448 512" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                <path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"> </path>
-              </svg>
-              Search
-            </button>}
+            {this.props.searchReg && (
+              <button
+                type="button"
+                className="btn btn-outline-secondary searchButton"
+                onClick={() => {
+                  this.triggerEvent(true);
+                }}
+              >
+                <svg
+                  stroke="currentColor"
+                  fill="currentColor"
+                  strokeWidth="0"
+                  viewBox="0 0 448 512"
+                  aria-hidden="true"
+                  focusable="false"
+                  height="1em"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z">
+                    {" "}
+                  </path>
+                </svg>
+                Search
+              </button>
+            )}
           </div>
-          
-          <Popup trigger={trig} setSearch={this.triggerEvent} heading={<h4>Search</h4>}>
-            <QueryGenerator data={this.state.data} qChange={this.queryChange} queryRef={this.props.searchReg} />
+          10
+          <Popup
+            trigger={trig}
+            setSearch={this.triggerEvent}
+            heading={<h4>Search</h4>}
+          >
+            <QueryGenerator
+              data={this.state.data}
+              qChange={this.queryChange}
+              queryRef={this.props.searchReg}
+            />
           </Popup>
-
           <Table key={"Table"} striped bordered hover>
             <thead>
               <tr>
@@ -290,60 +374,128 @@ export class RTable extends React.Component<rTableInterface> {
                 : this.NrenderBody(data)}
             </tbody>
           </Table>
-
           <TablePagination
             key={"TablePagination"}
             onSelectClick={this.onSelectClick}
             onClick={this.onClick}
             totalPages={this.totalPages()}
             page={this.page}
-            TotalRecord = {TotalRecord}
+            TotalRecord={TotalRecord}
             onClickNext={this.onClickNext}
             onClickPrevious={this.onClickPrevious}
           />
         </TabContainer>
       );
-    }
-    else {
+    } else {
       let trig = this.state.trigger;
-      return this.state?.isLoaded===false ? <LoadingSpinner /> :<TabContainer key={"TabContainer"}>
-         <div className="Buttons">
-            <div className="bg-success p-2 text-dark bg-opacity-25 record">Total Records: {this.state.items[1]}</div>
+      return this.state?.isLoaded === false ? (
+        <LoadingSpinner />
+      ) : (
+        <TabContainer key={"TabContainer"}>
+          <div className="Buttons">
+            <div className="bg-success p-2 text-dark bg-opacity-25 record">
+              Total Records: {this.state.items[1]}
+            </div>
 
-            {this.props.Addlink && <Link to={this.props.Addlink} type="button" className="btn btn-outline-primary Export" onClick={() => { this.triggerEvent(true) }} >
-              <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 448 512" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path></svg>
-              Add New
-            </Link>}
+            {this.props.Addlink && (
+              <Link
+                to={this.props.Addlink}
+                type="button"
+                className="btn btn-outline-primary Export"
+                onClick={() => {
+                  this.triggerEvent(true);
+                }}
+              >
+                <svg
+                  stroke="currentColor"
+                  fill="currentColor"
+                  strokeWidth="0"
+                  viewBox="0 0 448 512"
+                  aria-hidden="true"
+                  focusable="false"
+                  height="1em"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path>
+                </svg>
+                Add New
+              </Link>
+            )}
 
-            <button type="button" className="btn btn-outline-success Export" onClick={() => { this.export() }} >
-              <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21"
-                viewBox="0 0 24 24" fill="#007745" stroke="white" strokeWidth="2"
-                strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21.2 15c.7-1.2 1-2.5.7-3.9-.6-2-2.4-3.5-4.4-3.5h-1.2c-.7-3-3.2-5.2-6.2-5.6-3-.3-5.9 1.3-7.3 4-1.2 2.5-1 6.5.5 8.8m8.7-1.6V21" /><path d="M16 16l-4-4-4 4" /></svg>
+            <button
+              type="button"
+              className="btn btn-outline-success Export"
+              onClick={() => {
+                this.export();
+              }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="21"
+                height="21"
+                viewBox="0 0 24 24"
+                fill="#007745"
+                stroke="white"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M21.2 15c.7-1.2 1-2.5.7-3.9-.6-2-2.4-3.5-4.4-3.5h-1.2c-.7-3-3.2-5.2-6.2-5.6-3-.3-5.9 1.3-7.3 4-1.2 2.5-1 6.5.5 8.8m8.7-1.6V21" />
+                <path d="M16 16l-4-4-4 4" />
+              </svg>
               Export
             </button>
 
-            {this.props.searchReg && <button type="button" className="btn btn-outline-secondary searchButton" onClick={() => { this.triggerEvent(true) }} >
-              <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 448 512" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                <path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"> </path>
-              </svg>
-              Search
-            </button>}
+            {this.props.searchReg && (
+              <button
+                type="button"
+                className="btn btn-outline-secondary searchButton"
+                onClick={() => {
+                  this.triggerEvent(true);
+                }}
+              >
+                <svg
+                  stroke="currentColor"
+                  fill="currentColor"
+                  strokeWidth="0"
+                  viewBox="0 0 448 512"
+                  aria-hidden="true"
+                  focusable="false"
+                  height="1em"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z">
+                    {" "}
+                  </path>
+                </svg>
+                Search
+              </button>
+            )}
           </div>
-          
-          <Popup trigger={trig} setSearch={this.triggerEvent} heading={<h4>Search</h4>}>
-            <QueryGenerator data={this.state.data} qChange={this.queryChange} queryRef={this.props.searchReg} />
+
+          <Popup
+            trigger={trig}
+            setSearch={this.triggerEvent}
+            heading={<h4>Search</h4>}
+          >
+            <QueryGenerator
+              data={this.state.data}
+              qChange={this.queryChange}
+              queryRef={this.props.searchReg}
+            />
           </Popup>
 
-        <Table key={"Table"} striped bordered hover>
-          <thead>
-            <tr>
-              <th align="right">nodata</th>
-            </tr>
-          </thead>
-        </Table>
-      </TabContainer>
+          <Table key={"Table"} striped bordered hover>
+            <thead>
+              <tr>
+                <th align="right">nodata</th>
+              </tr>
+            </thead>
+          </Table>
+        </TabContainer>
+      );
     }
   }
 }
