@@ -108,7 +108,6 @@ export const CardGrid = (props: any) => {
   };
 
   const exportbutton = () => {
-    let d = data;
     let columns = props?.ExportStructure ? [] : ErenderHeading(data, false);
 
     var today = new Date();
