@@ -176,7 +176,7 @@ export const CardGrid = (props: any) => {
   };
 
   return (
-    <div className="container" style={{ marginTop: 100 }}>
+    <div className="container" style={{ marginTop: 10 }}>
       <Row xs={1} md={2} className="g-4 mb-3">
         {cardLoad()}
       </Row>
