@@ -41,7 +41,7 @@ export const UserList = () => {
       <RTable deleteUrl="role/softDelete" api="role/withPagination"  />
       <h3>Deleted Role Table</h3>
       <RTable deleteUrl="role/restore" api="role/onlyDeleted" />
-
+      <h3>Role Card Grid</h3>
       <CardGrid />
     </div>
   );

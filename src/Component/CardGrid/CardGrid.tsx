@@ -100,7 +100,7 @@ export const CardGrid: any = () => {
         // onClick={this.onClick}
         totalPages={pageSize}
         // page={this.page}
-        // TotalRecord = {TotalRecord}
+        TotalRecord = {count}
         // onClickNext={this.onClickNext}
         // onClickPrevious={this.onClickPrevious}
       />
