@@ -348,7 +348,6 @@ export class RTable extends React.Component<rTableInterface> {
               </button>
             )}
           </div>
-          10
           <Popup
             trigger={trig}
             setSearch={this.triggerEvent}
