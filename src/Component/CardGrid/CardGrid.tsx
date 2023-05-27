@@ -177,9 +177,41 @@ export const CardGrid = (props: any) => {
 
   return (
     <div className="container" style={{ marginTop: 10 }}>
+      <div className="Buttons">
+        <div className="bg-success p-2 text-dark bg-opacity-25 record">
+            Total Records: {count}
+        </div>
+
+        <button
+              type="button"
+              className="btn btn-outline-success Export"
+              onClick={() => {
+                exportbutton()
+              }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="21"
+                height="21"
+                viewBox="0 0 24 24"
+                fill="#007745"
+                stroke="white"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M21.2 15c.7-1.2 1-2.5.7-3.9-.6-2-2.4-3.5-4.4-3.5h-1.2c-.7-3-3.2-5.2-6.2-5.6-3-.3-5.9 1.3-7.3 4-1.2 2.5-1 6.5.5 8.8m8.7-1.6V21" />
+                <path d="M16 16l-4-4-4 4" />
+              </svg>
+              Export
+            </button>
+
+      </div>
+
       <Row xs={1} md={2} className="g-4 mb-3">
         {cardLoad()}
       </Row>
+
       <TablePagination
         key={"TablePagination"}
         onSelectClick={onSelectClick}
