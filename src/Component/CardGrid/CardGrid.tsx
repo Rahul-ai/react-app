@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { Api } from "../../Helpers/axios/axios";
 import { ExportToCsv } from "export-to-csv";
 import { Link } from "react-router-dom";
+import { LoadingSpinner } from "../Spinner/LoadingSpinner";
 
 export const CardGrid = (props: any) => {
   const [data, setData] = useState([]);
@@ -19,6 +20,7 @@ export const CardGrid = (props: any) => {
   const [limit, setLimit] = useState(10);
   const [pageSize, setPageSize] = useState<number>(1);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [loading, setLoading] = useState<boolean>(false);
 
   let variant = [
     "Primary",
@@ -33,18 +35,25 @@ export const CardGrid = (props: any) => {
   const fetch = () => {
     Api.post(props.api, { page: currentPage, limit: limit })
       .then((res: any) => {
+        setLoading(true);
         if (res[0] && res[1]) {
           setData(res[0]);
           setCount(res[1]);
-          setPageSize(Math.ceil(res[1] / limit));
         } else {
           setData(res);
+        }
+        if (limit <= -1) {
+          setPageSize(1);
+        } else {
+          setPageSize(Math.ceil(res[1] / limit));
         }
       })
       .catch((error: any) => {
         console.log(error);
       })
-      .finally(() => {});
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const SrNo = (index: number) => {
@@ -70,8 +79,10 @@ export const CardGrid = (props: any) => {
   };
 
   const totalPage = () => {
-    if (count != -1) {
+    if (limit != -1) {
       setPageSize(Math.ceil(count / 10));
+    } else {
+      setPageSize(1);
     }
   };
 
@@ -175,77 +186,83 @@ export const CardGrid = (props: any) => {
     });
     return a;
   };
-
-  return (
-    <div className="container" style={{ marginTop: 10 }}>
-      <div className="Buttons">
-        <div className="bg-success p-2 text-dark bg-opacity-25 record">
+  if (loading == false) {
+    return (
+      <div className="container" style={{ marginTop: 10 }}>
+        <div className="Buttons">
+          <div className="bg-success p-2 text-dark bg-opacity-25 record">
             Total Records: {count}
-        </div>
+          </div>
 
-        {props.Addlink && (
-              <Link
-                to={props.Addlink}
-                type="button"
-                className="btn btn-outline-primary Export"
-              >
-                <svg
-                  stroke="currentColor"
-                  fill="currentColor"
-                  strokeWidth="0"
-                  viewBox="0 0 448 512"
-                  aria-hidden="true"
-                  focusable="false"
-                  height="1em"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path>
-                </svg>
-                Add New
-              </Link>
-            )}
-
-        <button
+          {props.Addlink && (
+            <Link
+              to={props.Addlink}
               type="button"
-              className="btn btn-outline-success Export"
-              onClick={() => {
-                exportbutton()
-              }}
+              className="btn btn-outline-primary Export"
             >
               <svg
+                stroke="currentColor"
+                fill="currentColor"
+                strokeWidth="0"
+                viewBox="0 0 448 512"
+                aria-hidden="true"
+                focusable="false"
+                height="1em"
+                width="1em"
                 xmlns="http://www.w3.org/2000/svg"
-                width="21"
-                height="21"
-                viewBox="0 0 24 24"
-                fill="#007745"
-                stroke="white"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
               >
-                <path d="M21.2 15c.7-1.2 1-2.5.7-3.9-.6-2-2.4-3.5-4.4-3.5h-1.2c-.7-3-3.2-5.2-6.2-5.6-3-.3-5.9 1.3-7.3 4-1.2 2.5-1 6.5.5 8.8m8.7-1.6V21" />
-                <path d="M16 16l-4-4-4 4" />
+                <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path>
               </svg>
-              Export
-            </button>
+              Add New
+            </Link>
+          )}
 
+          <button
+            type="button"
+            className="btn btn-outline-success Export"
+            onClick={() => {
+              exportbutton();
+            }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="21"
+              height="21"
+              viewBox="0 0 24 24"
+              fill="#007745"
+              stroke="white"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M21.2 15c.7-1.2 1-2.5.7-3.9-.6-2-2.4-3.5-4.4-3.5h-1.2c-.7-3-3.2-5.2-6.2-5.6-3-.3-5.9 1.3-7.3 4-1.2 2.5-1 6.5.5 8.8m8.7-1.6V21" />
+              <path d="M16 16l-4-4-4 4" />
+            </svg>
+            Export
+          </button>
+        </div>
+
+        <Row xs={1} md={2} className="g-4 mb-3">
+          {cardLoad()}
+        </Row>
+
+        <TablePagination
+          key={"TablePagination"}
+          onSelectClick={onSelectClick}
+          onClick={onClick}
+          totalPages={pageSize}
+          page={currentPage}
+          TotalRecord={count}
+          onClickNext={onClickNext}
+          onClickPrevious={onClickPrevious}
+        />
       </div>
-
-      <Row xs={1} md={2} className="g-4 mb-3">
-        {cardLoad()}
-      </Row>
-
-      <TablePagination
-        key={"TablePagination"}
-        onSelectClick={onSelectClick}
-        onClick={onClick}
-        totalPages={pageSize}
-        page={currentPage}
-        TotalRecord={count}
-        onClickNext={onClickNext}
-        onClickPrevious={onClickPrevious}
-      />
-    </div>
-  );
+    );
+  } else {
+    return (
+      <div className="container" style={{ marginTop: 10 }}>
+        <LoadingSpinner />
+      </div>
+    );
+  }
 };
