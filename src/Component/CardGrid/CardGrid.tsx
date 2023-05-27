@@ -16,11 +16,11 @@ import { LoadingSpinner } from "../Spinner/LoadingSpinner";
 
 export const CardGrid = (props: any) => {
   const [data, setData] = useState([]);
-  const [count, setCount] = useState<number>(1);
+  const [count, setCount] = useState<number>(0);
   const [limit, setLimit] = useState(10);
-  const [pageSize, setPageSize] = useState<number>(1);
+  const [pageSize, setPageSize] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   let variant = [
     "Primary",
@@ -186,7 +186,12 @@ export const CardGrid = (props: any) => {
     });
     return a;
   };
-  if (loading == false) {
+
+  if (loading === false && count == 0 ) {
+    return <div className="container" style={{ marginTop: 10 }}>
+      <p>No Data Found</p>
+    </div>;
+  } else if (loading == false) {
     return (
       <div className="container" style={{ marginTop: 10 }}>
         <div className="Buttons">
