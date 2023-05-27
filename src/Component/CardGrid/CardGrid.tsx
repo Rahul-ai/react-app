@@ -11,6 +11,7 @@ import { TablePagination } from "../Table/TablePagination";
 import { useEffect, useState } from "react";
 import { Api } from "../../Helpers/axios/axios";
 import { ExportToCsv } from "export-to-csv";
+import { Link } from "react-router-dom";
 
 export const CardGrid = (props: any) => {
   const [data, setData] = useState([]);
@@ -181,6 +182,29 @@ export const CardGrid = (props: any) => {
         <div className="bg-success p-2 text-dark bg-opacity-25 record">
             Total Records: {count}
         </div>
+
+        {props.Addlink && (
+              <Link
+                to={props.Addlink}
+                type="button"
+                className="btn btn-outline-primary Export"
+              >
+                <svg
+                  stroke="currentColor"
+                  fill="currentColor"
+                  strokeWidth="0"
+                  viewBox="0 0 448 512"
+                  aria-hidden="true"
+                  focusable="false"
+                  height="1em"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path>
+                </svg>
+                Add New
+              </Link>
+            )}
 
         <button
               type="button"
