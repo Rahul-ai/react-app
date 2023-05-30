@@ -188,7 +188,7 @@ export const CardGrid = (props: any) => {
   };
 
   if (loading === false && count == 0 ) {
-    return <div className="container" style={{ marginTop: 10 }}>
+    return <div className="container">
       <p>No Data Found</p>
     </div>;
   } else if (loading == false) {
